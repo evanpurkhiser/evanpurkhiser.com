@@ -1,0 +1,32 @@
+html {
+  background: url(../images/geometric.png); }
+
+body {
+  overflow: hidden;
+  margin: 60px auto;
+  width: 600px;
+  background: white;
+  font: 16px/21px "Source Sans Pro";
+  color: #383a40; }
+
+header {
+  text-align: center; }
+  header h1 {
+    font: 32px Cabin;
+    margin: 4px; }
+  header small {
+    color: #a7aebf;
+    font-size: 15px; }
+
+hr {
+  border: 1px solid #ff765e;
+  margin: 30px 0; }
+
+a {
+  color: #ff765e;
+  text-decoration: none; }
+  a:hover {
+    color: #f72500; }
+
+p {
+  text-align: justify; }
