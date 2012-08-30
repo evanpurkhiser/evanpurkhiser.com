@@ -7,7 +7,7 @@ body {
   width: 600px;
   background: white;
   font: 16px/21px "Source Sans Pro";
-  color: #383a40; }
+  color: #333745; }
 
 header {
   text-align: center; }
@@ -19,14 +19,14 @@ header {
     font-size: 15px; }
 
 hr {
-  border: 1px solid #ff765e;
+  border: 1px solid #ea2e49;
   margin: 30px 0; }
 
 a {
-  color: #ff765e;
+  color: #ea2e49;
   text-decoration: none; }
   a:hover {
-    color: #f72500; }
+    color: #a21025; }
 
 p {
   text-align: justify; }
