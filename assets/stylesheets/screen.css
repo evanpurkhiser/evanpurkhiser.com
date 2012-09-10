@@ -9,6 +9,9 @@ body {
   font: 16px/21px "Source Sans Pro";
   color: #333745; }
 
+section, hr {
+  margin: 30px 0; }
+
 header {
   text-align: center; }
   header h1 {
@@ -19,8 +22,7 @@ header {
     font-size: 15px; }
 
 hr {
-  border: 1px solid #ea2e49;
-  margin: 30px 0; }
+  border: 1px solid #ea2e49; }
 
 a {
   color: #ea2e49;
