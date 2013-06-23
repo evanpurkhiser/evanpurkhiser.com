@@ -1,0 +1,32 @@
+@import "http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700|Cabin:600"
+
+body
+	font: 16px/21px "Source Sans Pro"
+
+section, hr
+	margin: 30px 0
+
+hr
+	border: 1px solid $highlight
+
+a
+	color: $highlight
+	text-decoration: none
+
+	&:hover
+		color: darken($highlight, 20%)
+
+p
+	text-align: justify
+
+h1
+	font: 32px Cabin
+	margin: 4px
+
+small
+	color: $light
+	font-size: 15px
+
+@media (max-width: $media-max-width)
+	section, hr
+		margin: 15px 0
