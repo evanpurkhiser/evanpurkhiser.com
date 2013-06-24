@@ -1,5 +1,6 @@
 ---
 layout: page
+title: About
 ---
 
 Hi there! My name's Evan. I'm a software developer who takes a special interest
