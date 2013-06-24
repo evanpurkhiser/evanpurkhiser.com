@@ -2,3 +2,6 @@ title: Evan Purkhiser
 timezone: America/New_York
 
 markdown: redcarpet
+
+redcarpet:
+  extensions: ["autolink", "tables", "strikethrough", "superscript"]
