@@ -13,8 +13,7 @@ design, but usually find myself in awe over the subtle details in the shots from
 When I'm not solving problems you can find me out on the dance floor enjoying my
 favorite genre of music,
 [UK Hardcore](http://en.wikipedia.org/wiki/UK_hardcore). But most likely, you'll
-find me spending time with my firlenids watching whatever we can find on
-Netflix.
+find me spending time with my friends watching whatever we can find on Netflix.
 
 Check out my [About Me repository](https://github.com/EvanPurkhiser/About) on
 GitHub or jump right to my
