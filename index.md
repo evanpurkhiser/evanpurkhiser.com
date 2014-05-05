@@ -17,5 +17,5 @@ Trance](http://en.wikipedia.org/wiki/Uplifting_trance). But most likely, you'll
 find me spending time with my friends watching whatever we can find on Netflix.
 
 Check out my [About Me repository](https://github.com/EvanPurkhiser/About) on
-GitHub or jump right to my
+[my GitHub](https://github.com/EvanPurkhiser) or jump right to my
 [Resume](https://raw.github.com/EvanPurkhiser/About/master/resume/resume.pdf).
