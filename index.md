@@ -10,8 +10,8 @@ get excited easily). I also like to think I have an eye for clean and usable
 design, but usually find myself in awe over the subtle details in the shots from
 [Dribble](http://dribbble.com).
 
-When I'm not solving problems you can find me out on the dance floor enjoying
-my favorite genres of music, [UK
+When I'm not solving problems you can find me out on the dance floor or
+[spinning](http://evanpurkhiser.com/mixes) my favorite genres of music, [UK
 Hardcore](http://en.wikipedia.org/wiki/UK_hardcore) and [Uplifting
 Trance](http://en.wikipedia.org/wiki/Uplifting_trance). But most likely, you'll
 find me spending time with my friends watching whatever we can find on Netflix.
