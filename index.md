@@ -15,6 +15,5 @@ music, [UK Hardcore](http://en.wikipedia.org/wiki/UK_hardcore) and [Uplifting
 Trance](http://en.wikipedia.org/wiki/Uplifting_trance). But most likely, you'll
 find me spending time with my friends watching whatever we can find on Netflix.
 
-Check out my [About Me repository](https://github.com/EvanPurkhiser/About) on
-[my GitHub](https://github.com/EvanPurkhiser) or jump right to my
-[Resume](https://raw.github.com/EvanPurkhiser/About/master/resume/resume.pdf).
+Check out my projects on [GitHub](https://github.com/EvanPurkhiser),or jump right to my
+[Resume](http://nbviewer.jupyter.org/github/EvanPurkhiser/resume/blob/master/resume.pdf)!
