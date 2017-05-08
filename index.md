@@ -16,5 +16,5 @@ and [Uplifting Trance](https://soundcloud.com/oriuplift/tracks). Of
 course, outside of dancing you'll find me at the gym, spending time with my
 friends, or getting excited about my next trip.
 
-Check out my projects on [GitHub](https://github.com/EvanPurkhiser), or jump right to my
-[Resume](http://nbviewer.jupyter.org/github/EvanPurkhiser/resume/blob/master/resume.pdf)!
+Check out my projects on [GitHub](https://github.com/EvanPurkhiser), or jump
+right to my [Resume](https://resume.evanpurkhiser.com)!
