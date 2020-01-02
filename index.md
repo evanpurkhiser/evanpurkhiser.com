@@ -12,8 +12,8 @@ my holy grail.
 When I'm not at a keyboard you can find me down on the dance floor bouncing
 around to, or [even spinning](https://soundcloud.com/evanpurkhiser), some of my
 favorite genres of music: [UK Hardcore](https://www.youtube.com/watch?v=f74_RDPnaOE)
-and [Uplifting Trance](https://soundcloud.com/oriuplift/tracks). Of
-course, outside of dancing you'll find me at the gym, spending time with my
+and [Uplifting Trance](https://soundcloud.com/evanpurkhiser/purkhiser-promo-2020).
+Of course, outside of dancing you'll find me at the gym, spending time with my
 friends, or getting excited about my next trip.
 
 Check out my projects on [GitHub](https://github.com/EvanPurkhiser), or jump
