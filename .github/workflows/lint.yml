@@ -14,5 +14,5 @@ jobs:
         with:
           persist-credentials: false
       - uses: jdx/mise-action@e6a8b3978addb5a52f2b4cd9d91eafa7f0ab959d # v4.2.0
-      - run: npm ci
+      - run: pnpm install --frozen-lockfile
       - run: prek run --all-files

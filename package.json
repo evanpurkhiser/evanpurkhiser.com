@@ -27,8 +27,8 @@
   },
   "devEngines": {
     "packageManager": {
-      "name": "npm",
-      "version": "11.12.1"
+      "name": "pnpm",
+      "version": "11.15.1"
     },
     "runtime": {
       "name": "node",
