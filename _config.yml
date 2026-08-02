@@ -1,7 +1,0 @@
-title: Evan Purkhiser
-analytics: UA-50787028-1
-
-defaults:
-  -
-    scope:  { path: "" }
-    values: { layout: "page" }

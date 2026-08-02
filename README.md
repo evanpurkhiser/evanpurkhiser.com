@@ -1,3 +1,8 @@
-#### evanpurkhiser.com
+# evanpurkhiser.com
 
-This is my personal website, hosted on GitHub's wonderful [Pages service](http://pages.github.com/).
+Evan's personal website, built with [Next.js](https://nextjs.org).
+
+```sh
+npm install
+npm run dev
+```
