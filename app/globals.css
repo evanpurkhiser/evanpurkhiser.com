@@ -48,19 +48,7 @@ main {
 }
 
 .currently {
-  grid-template-columns: minmax(180px, 0.7fr) minmax(0, 1.3fr);
-  gap: 8px 48px;
-  align-items: center;
-}
-
-.currently h2,
-.currently p {
-  grid-column: 1;
-}
-
-.currently > :last-child {
-  grid-column: 2;
-  grid-row: 1 / span 2;
+  gap: 8px;
 }
 
 h1 {
@@ -102,15 +90,4 @@ h2 {
   text-decoration-color: color-mix(in srgb, var(--color-blue) 45%, transparent);
   text-decoration-thickness: 2px;
   text-underline-offset: 3px;
-}
-
-@media (max-width: 600px) {
-  .currently {
-    grid-template-columns: 1fr;
-  }
-
-  .currently > :last-child {
-    grid-column: 1;
-    grid-row: auto;
-  }
 }

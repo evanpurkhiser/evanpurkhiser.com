@@ -1,5 +1,3 @@
-import CommitGraph from './components/CommitGraph';
-
 export default function Home() {
   return (
     <main>
@@ -16,7 +14,6 @@ export default function Home() {
         <p>
           9 years at <a href="https://sentry.io">sentry.io</a>. 6,121 commits.
         </p>
-        <CommitGraph />
       </section>
     </main>
   );
