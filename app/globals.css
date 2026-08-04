@@ -1,3 +1,14 @@
+@font-face {
+  font-family: 'Syncopate Adjusted';
+  src: url('https://fonts.gstatic.com/s/syncopate/v24/pe0pMIuPIYBCpEV5eFdKvtKaAw.ttf')
+    format('truetype');
+  font-weight: 700;
+  font-display: swap;
+  ascent-override: 95%;
+  descent-override: 25%;
+  line-gap-override: 0%;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -33,30 +44,38 @@ body {
 main {
   display: grid;
   grid-row: 2;
-  inline-size: min(800px, calc(100% - 48px));
+  inline-size: min(800px, calc(100% - 92px));
   gap: 72px;
   block-size: fit-content;
 }
 
-.intro,
-.currently {
+.intro {
   display: grid;
 }
 
 .intro {
-  gap: 32px;
+  row-gap: 32px;
 }
 
-.currently {
-  gap: 8px;
+.intro-title {
+  position: relative;
+}
+
+.intro-mark {
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-end: calc(100% + 4px);
+  color: var(--color-orange);
+  translate: 0 -50%;
 }
 
 h1 {
-  font-family: 'Syncopate', sans-serif;
-  font-size: 24px;
+  font-family: 'Syncopate Adjusted', 'Syncopate', sans-serif;
+  font-size: 26px;
   font-weight: 700;
   letter-spacing: -0.04em;
   line-height: 1;
+  text-rendering: geometricPrecision;
 }
 
 .intro p {
@@ -67,27 +86,4 @@ h1 {
   font-weight: 300;
   line-height: 1.45;
   text-wrap: balance;
-}
-
-h2 {
-  font-family: 'Inter', sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-}
-
-.currently p {
-  color: var(--color-text-soft);
-  font-family: 'Inter', sans-serif;
-  font-size: 17px;
-  font-weight: 300;
-  line-height: 1.4;
-}
-
-.currently a {
-  color: var(--color-text);
-  font-weight: 600;
-  text-decoration-color: color-mix(in srgb, var(--color-blue) 45%, transparent);
-  text-decoration-thickness: 2px;
-  text-underline-offset: 3px;
 }
