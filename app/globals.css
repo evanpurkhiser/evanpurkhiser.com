@@ -1,14 +1,3 @@
-@font-face {
-  font-family: 'Syncopate Adjusted';
-  src: url('https://fonts.gstatic.com/s/syncopate/v24/pe0pMIuPIYBCpEV5eFdKvtKaAw.ttf')
-    format('truetype');
-  font-weight: 700;
-  font-display: swap;
-  ascent-override: 95%;
-  descent-override: 25%;
-  line-gap-override: 0%;
-}
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -35,6 +24,10 @@ body {
   min-block-size: 100dvb;
   justify-items: center;
   padding-block-end: min(20dvh, 200px);
+}
+
+.fonts-loading body {
+  visibility: hidden;
 }
 
 ::selection {
@@ -71,7 +64,7 @@ main {
 }
 
 h1 {
-  font-family: 'Syncopate Adjusted', 'Syncopate', sans-serif;
+  font-family: var(--font-syncopate), sans-serif;
   font-size: 26px;
   font-weight: 700;
   letter-spacing: -0.04em;
@@ -82,7 +75,7 @@ h1 {
 .intro p {
   max-inline-size: 740px;
   color: var(--color-text-soft);
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-inter), sans-serif;
   font-size: 22px;
   font-weight: 300;
   line-height: 1.45;

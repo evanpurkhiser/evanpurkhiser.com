@@ -1,6 +1,31 @@
 import './globals.css';
 
 import type {Metadata} from 'next';
+import {DM_Mono, Inter, Syncopate} from 'next/font/google';
+
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['300', '400'],
+  variable: '--font-inter',
+});
+
+const dmMono = DM_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500'],
+  variable: '--font-dm-mono',
+});
+
+const syncopate = Syncopate({
+  subsets: ['latin'],
+  weight: '700',
+  variable: '--font-syncopate',
+});
+
+const revealFontsScript = `
+  document.fonts.ready.then(() => {
+    document.documentElement.classList.remove('fonts-loading');
+  });
+`;
 
 export const metadata: Metadata = {
   title: 'Evan Purkhiser',
@@ -9,16 +34,20 @@ export const metadata: Metadata = {
 
 export default function RootLayout({children}: Readonly<{children: React.ReactNode}>) {
   return (
-    <html lang="en">
+    <html
+      lang="en"
+      className={`${inter.variable} ${dmMono.variable} ${syncopate.variable} fonts-loading`}
+      suppressHydrationWarning
+    >
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=DM+Mono&family=Inter:wght@300;400;600&family=Syncopate:wght@700&display=swap"
-          rel="stylesheet"
-        />
+        <noscript>
+          <style>{'.fonts-loading body { visibility: visible; }'}</style>
+        </noscript>
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <script dangerouslySetInnerHTML={{__html: revealFontsScript}} />
+      </body>
     </html>
   );
 }

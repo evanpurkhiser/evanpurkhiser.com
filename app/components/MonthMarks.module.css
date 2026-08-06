@@ -2,7 +2,7 @@
   position: relative;
   block-size: 10px;
   color: var(--color-text-muted);
-  font-family: 'DM Mono', monospace;
+  font-family: var(--font-dm-mono), monospace;
   font-size: 10px;
   line-height: 1;
 }
