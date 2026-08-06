@@ -30,8 +30,8 @@
   inset-inline-start: var(--timeline-cursor-viewport-x, 0px);
   background: repeating-linear-gradient(
     to bottom,
-    var(--timeline-cursor-dotted-color) 0 3px,
-    transparent 3px 7px
+    var(--timeline-cursor-dotted-color) 0 1px,
+    transparent 1px 4px
   );
   translate: -50% 0;
 }
