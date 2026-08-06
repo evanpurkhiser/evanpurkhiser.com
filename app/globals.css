@@ -70,6 +70,9 @@ h1 {
   letter-spacing: -0.04em;
   line-height: 1;
   text-rendering: geometricPrecision;
+
+  /* Compensate for Syncopate's generous left sidebearing on the E. */
+  translate: -0.08em 0;
 }
 
 .intro p {
