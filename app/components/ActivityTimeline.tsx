@@ -24,6 +24,7 @@ const palettes = {
 } as const;
 
 type ActivityGraphProps = {
+  active: boolean;
   id: string;
   label: string;
   source: ActivitySource;
@@ -70,6 +71,7 @@ function useActivity(load: ActivityLoader) {
 }
 
 function ActivityGraph({
+  active,
   id,
   label,
   source,
@@ -97,6 +99,7 @@ function ActivityGraph({
       </div>
 
       <TimeRasterGraph
+        active={active}
         data={rasterData}
         start={start}
         end={end}
@@ -126,6 +129,7 @@ export default function ActivityTimeline() {
       <div className={styles.cursorRegion} {...cursor.containerProps}>
         <div className={styles.graphs}>
           <ActivityGraph
+            active={cursor.active}
             id="terminal-activity-title"
             label="Terminal Activity"
             source={terminalActivity}
@@ -136,6 +140,7 @@ export default function ActivityTimeline() {
             revealDarkColor={palettes.terminalActivity.darkColor}
           />
           <ActivityGraph
+            active={cursor.active}
             id="github-title"
             label="GitHub Activity"
             source={github}

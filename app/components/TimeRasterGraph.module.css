@@ -26,26 +26,18 @@
 
 .colorLayer {
   position: absolute;
-  inset-block-start: -4px;
-  inset-inline: -4px;
-  inline-size: auto;
-  opacity: 0;
+  inset-block-start: 0;
+  inset-inline: 0;
+  overflow: visible;
   pointer-events: none;
-  clip-path: inset(
-    0
-      max(
-        0px,
-        calc(
-          100% - var(--timeline-cursor-x, 0px) - 4px -
-            var(--time-raster-reveal-half-width)
-        )
-      )
-      0
-      max(
-        0px,
-        calc(var(--timeline-cursor-x, 0px) + 4px - var(--time-raster-reveal-half-width))
-      )
-  );
+}
+
+.revealMask {
+  x: calc(var(--timeline-cursor-x, 0px) - var(--time-raster-reveal-half-width));
+  width: var(--time-raster-reveal-width);
+  fill: white;
+  transform-box: fill-box;
+  transform-origin: center;
 }
 
 .colorBackdrop {
@@ -54,10 +46,6 @@
     transparent,
     var(--time-raster-color, var(--color-orange)) 10%
   );
-}
-
-:global([data-timeline-cursor-active]) .colorLayer {
-  opacity: 1;
 }
 
 :global([data-timeline-cursor-active]) .baseLayer {

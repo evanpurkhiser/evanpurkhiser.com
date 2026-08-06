@@ -1,6 +1,8 @@
 'use client';
 
-import {useEffect, useMemo, useRef, useState, type CSSProperties} from 'react';
+import {useEffect, useId, useMemo, useRef, useState, type CSSProperties} from 'react';
+
+import {motion, useReducedMotion} from 'framer-motion';
 
 import {type DateValue, getMonthStarts, toTimestamp} from '../lib/timeRange';
 
@@ -19,6 +21,7 @@ export type TimeRasterBucket = {
 };
 
 type TimeRasterGraphProps = {
+  active?: boolean;
   data: readonly TimeRasterDatum[];
   start: DateValue;
   end: DateValue;
@@ -164,6 +167,7 @@ function getColorIntensities(
 }
 
 export default function TimeRasterGraph({
+  active = false,
   data,
   start,
   end,
@@ -189,6 +193,8 @@ export default function TimeRasterGraph({
   tickColor = 'var(--color-text-muted)',
 }: TimeRasterGraphProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const maskId = `time-raster-reveal-${useId().replaceAll(':', '')}`;
+  const prefersReducedMotion = useReducedMotion();
   const [width, setWidth] = useState(() =>
     Math.min(DEFAULT_INITIAL_WIDTH, Math.max(1, Math.floor(maxBuckets))),
   );
@@ -323,24 +329,41 @@ export default function TimeRasterGraph({
                     '--time-raster-dark': revealDarkColor ?? revealColor,
                     '--time-raster-empty': emptyColor,
                     '--time-raster-tick': tickColor,
+                    '--time-raster-reveal-width': `${colorRevealWidth}px`,
                     '--time-raster-reveal-half-width': `${colorRevealWidth / 2}px`,
                   } as CSSProperties
                 }
-                height={chartHeight + REVEAL_BACKGROUND_INSET * 2}
-                viewBox={`-${REVEAL_BACKGROUND_INSET} -${REVEAL_BACKGROUND_INSET} ${graphWidth + REVEAL_BACKGROUND_INSET * 2} ${chartHeight + REVEAL_BACKGROUND_INSET * 2}`}
+                height={chartHeight}
+                viewBox={`0 0 ${graphWidth} ${chartHeight}`}
                 preserveAspectRatio="none"
                 shapeRendering="crispEdges"
                 aria-hidden="true"
               >
-                <rect
-                  className={styles.colorBackdrop}
-                  x={-REVEAL_BACKGROUND_INSET}
-                  y={-REVEAL_BACKGROUND_INSET}
-                  width={graphWidth + REVEAL_BACKGROUND_INSET * 2}
-                  height={height + REVEAL_BACKGROUND_INSET * 2}
-                />
-                {renderBuckets()}
-                {showRevealMonthTicks && renderMonthTicks()}
+                <mask id={maskId} maskUnits="userSpaceOnUse">
+                  <motion.rect
+                    className={styles.revealMask}
+                    y={-REVEAL_BACKGROUND_INSET}
+                    height={chartHeight + REVEAL_BACKGROUND_INSET * 2}
+                    initial={false}
+                    animate={{scaleX: active ? 1 : 0}}
+                    transition={
+                      prefersReducedMotion
+                        ? {duration: 0}
+                        : {duration: 0.15, ease: [0.22, 1, 0.36, 1]}
+                    }
+                  />
+                </mask>
+                <g mask={`url(#${maskId})`}>
+                  <rect
+                    className={styles.colorBackdrop}
+                    x={-REVEAL_BACKGROUND_INSET}
+                    y={-REVEAL_BACKGROUND_INSET}
+                    width={graphWidth + REVEAL_BACKGROUND_INSET * 2}
+                    height={height + REVEAL_BACKGROUND_INSET * 2}
+                  />
+                  {renderBuckets()}
+                  {showRevealMonthTicks && renderMonthTicks()}
+                </g>
               </svg>
             )}
           </>
