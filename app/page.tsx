@@ -11,8 +11,8 @@ export default function Home() {
           <h1>Evan Purkhiser</h1>
         </div>
         <p>
-          Engineer by profession. Builder by nature. Interested in every layer of a
-          product, from systems architecture to the smallest interaction details.
+          I&apos;m a Software Engineer with a love of building. Interested in every layer,
+          from systems architecture to the smallest interaction details.
         </p>
       </header>
 
