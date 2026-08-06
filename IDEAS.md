@@ -18,6 +18,7 @@ visualizations, expandable details, project pages, and writing.
   - GitHub
   - Instagram
   - SoundCloud
+  - Résumé
 
 ### Currently
 
