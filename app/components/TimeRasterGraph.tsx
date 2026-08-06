@@ -37,7 +37,6 @@ type TimeRasterGraphProps = {
   monthTickHeight?: number;
   revealColor?: string;
   revealDarkColor?: string;
-  revealFade?: number;
   revealWidth?: number;
   scale?: 'linear' | 'log';
   showMonthTicks?: boolean;
@@ -47,6 +46,7 @@ type TimeRasterGraphProps = {
 const DEFAULT_MAX_BUCKETS = 2016;
 const DEFAULT_INITIAL_WIDTH = 800;
 const ACCENT_START = 0.72;
+const REVEAL_BACKGROUND_INSET = 4;
 
 export function quantizeTimeRaster(
   data: readonly TimeRasterDatum[],
@@ -172,7 +172,7 @@ export default function TimeRasterGraph({
   className,
   color = 'var(--color-orange)',
   darkColor = 'color-mix(in oklch, var(--color-canvas), var(--color-orange) 45%)',
-  emptyColor = 'var(--color-canvas)',
+  emptyColor = 'transparent',
   height = 16,
   intensityExponent = 1,
   loading = false,
@@ -181,7 +181,6 @@ export default function TimeRasterGraph({
   monthTickHeight = 6,
   revealColor,
   revealDarkColor,
-  revealFade = 5,
   revealWidth = 100,
   scale = 'log',
   showMonthTicks = true,
@@ -230,7 +229,6 @@ export default function TimeRasterGraph({
   const duration = toTimestamp(end) - startTimestamp;
   const monthStarts = useMemo(() => getMonthStarts(start, end), [end, start]);
   const colorRevealWidth = Math.max(1, revealWidth);
-  const colorRevealFade = Math.min(colorRevealWidth / 2, Math.max(0, revealFade));
 
   const renderBuckets = () =>
     buckets.map((bucket, index) => {
@@ -323,17 +321,22 @@ export default function TimeRasterGraph({
                     '--time-raster-dark': revealDarkColor ?? revealColor,
                     '--time-raster-empty': emptyColor,
                     '--time-raster-tick': tickColor,
-                    '--time-raster-reveal-width': `${colorRevealWidth}px`,
                     '--time-raster-reveal-half-width': `${colorRevealWidth / 2}px`,
-                    '--time-raster-reveal-fade': `${colorRevealFade}px`,
                   } as CSSProperties
                 }
-                height={chartHeight}
-                viewBox={`0 0 ${graphWidth} ${chartHeight}`}
+                height={chartHeight + REVEAL_BACKGROUND_INSET * 2}
+                viewBox={`-${REVEAL_BACKGROUND_INSET} -${REVEAL_BACKGROUND_INSET} ${graphWidth + REVEAL_BACKGROUND_INSET * 2} ${chartHeight + REVEAL_BACKGROUND_INSET * 2}`}
                 preserveAspectRatio="none"
                 shapeRendering="crispEdges"
                 aria-hidden="true"
               >
+                <rect
+                  className={styles.colorBackdrop}
+                  x={-REVEAL_BACKGROUND_INSET}
+                  y={-REVEAL_BACKGROUND_INSET}
+                  width={graphWidth + REVEAL_BACKGROUND_INSET * 2}
+                  height={height + REVEAL_BACKGROUND_INSET * 2}
+                />
                 {renderBuckets()}
                 {renderMonthTicks()}
               </svg>

@@ -18,8 +18,8 @@ const DAY = 24 * 60 * 60 * 1000;
 const INTENSITY_EXPONENT = 2;
 
 const palettes = {
-  terminalActivity: {darkColor: '#ffc094', color: '#ff6800'},
-  github: {darkColor: '#9be9a8', color: '#39d353'},
+  terminalActivity: {darkColor: '#ffa96e', color: '#ff6800'},
+  github: {darkColor: '#72ed88', color: '#00d638'},
   monochrome: {darkColor: '#a0a0a0', color: '#000000'},
 } as const;
 
@@ -119,31 +119,33 @@ export default function ActivityTimeline() {
   const hasGitHubActivity = github.activity.length > 0;
 
   return (
-    <div className={styles.collection} {...cursor.containerProps}>
-      <div className={styles.graphs}>
-        <ActivityGraph
-          id="terminal-activity-title"
-          label="Terminal Activity"
-          source={terminalActivity}
-          color={palette.color}
-          darkColor={palette.darkColor}
-          intensityExponent={INTENSITY_EXPONENT}
-          revealColor={palettes.terminalActivity.color}
-          revealDarkColor={palettes.terminalActivity.darkColor}
-        />
-        <ActivityGraph
-          id="github-title"
-          label="GitHub"
-          source={github}
-          color={palette.color}
-          darkColor={palette.darkColor}
-          intensityExponent={INTENSITY_EXPONENT}
-          revealColor={palettes.github.color}
-          revealDarkColor={palettes.github.darkColor}
-        />
+    <div className={styles.collection}>
+      <div className={styles.cursorRegion} {...cursor.containerProps}>
+        <div className={styles.graphs}>
+          <ActivityGraph
+            id="terminal-activity-title"
+            label="Terminal Activity"
+            source={terminalActivity}
+            color={palette.color}
+            darkColor={palette.darkColor}
+            intensityExponent={INTENSITY_EXPONENT}
+            revealColor={palettes.terminalActivity.color}
+            revealDarkColor={palettes.terminalActivity.darkColor}
+          />
+          <ActivityGraph
+            id="github-title"
+            label="GitHub Activity"
+            source={github}
+            color={palette.color}
+            darkColor={palette.darkColor}
+            intensityExponent={INTENSITY_EXPONENT}
+            revealColor={palettes.github.color}
+            revealDarkColor={palettes.github.darkColor}
+          />
+        </div>
+        <MonthMarks loading={!hasGitHubActivity} start={github.start} end={github.end} />
+        <TimelineCursor active={cursor.active} />
       </div>
-      <MonthMarks loading={!hasGitHubActivity} start={github.start} end={github.end} />
-      <TimelineCursor active={cursor.active} />
     </div>
   );
 }

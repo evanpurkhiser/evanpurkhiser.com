@@ -16,7 +16,7 @@
   display: block;
   inline-size: 100%;
   overflow: hidden;
-  background: var(--time-raster-empty, var(--color-canvas));
+  background: transparent;
 }
 
 .baseLayer {
@@ -26,22 +26,34 @@
 
 .colorLayer {
   position: absolute;
-  inset: 0;
+  inset-block-start: -4px;
+  inset-inline: -4px;
+  inline-size: auto;
   opacity: 0;
   pointer-events: none;
-  mask-image: linear-gradient(
-    to right,
-    transparent,
-    black var(--time-raster-reveal-fade),
-    black calc(var(--time-raster-reveal-width) - var(--time-raster-reveal-fade)),
-    transparent var(--time-raster-reveal-width)
+  clip-path: inset(
+    0
+      max(
+        0px,
+        calc(
+          100% - var(--timeline-cursor-x, 0px) - 4px -
+            var(--time-raster-reveal-half-width)
+        )
+      )
+      0
+      max(
+        0px,
+        calc(var(--timeline-cursor-x, 0px) + 4px - var(--time-raster-reveal-half-width))
+      )
   );
-  mask-repeat: no-repeat;
-  mask-position: calc(
-      var(--timeline-cursor-x, 0px) - var(--time-raster-reveal-half-width)
-    )
-    0;
-  mask-size: var(--time-raster-reveal-width) 100%;
+}
+
+.colorBackdrop {
+  fill: color-mix(
+    in oklch,
+    transparent,
+    var(--time-raster-color, var(--color-orange)) 10%
+  );
 }
 
 :global([data-timeline-cursor-active]) .colorLayer {
@@ -63,7 +75,7 @@
     in oklch,
     color-mix(
       in oklch,
-      var(--time-raster-empty, var(--color-canvas)),
+      var(--time-raster-empty, transparent),
       var(
           --time-raster-dark,
           color-mix(in oklch, var(--color-canvas), var(--color-orange) 45%)
