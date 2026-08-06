@@ -4,5 +4,6 @@ dist/
 .next/
 .open-next/
 .wrangler/
+.dev.vars
 out/
 *.tsbuildinfo
