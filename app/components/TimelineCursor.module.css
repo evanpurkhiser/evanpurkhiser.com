@@ -1,0 +1,64 @@
+.cursor {
+  --timeline-cursor-dotted-color: color-mix(
+    in oklch,
+    var(--color-text-muted),
+    transparent 70%
+  );
+  --timeline-cursor-solid-color: var(--color-text);
+
+  pointer-events: none;
+}
+
+.pageLine,
+.containerLine,
+.pointer {
+  inline-size: 1px;
+  opacity: 0;
+  transition: opacity 100ms ease-out;
+}
+
+.active .pageLine,
+.active .containerLine,
+.active .pointer {
+  opacity: 1;
+}
+
+.pageLine {
+  position: fixed;
+  z-index: 1;
+  inset-block: 0;
+  inset-inline-start: var(--timeline-cursor-viewport-x, 0px);
+  background: repeating-linear-gradient(
+    to bottom,
+    var(--timeline-cursor-dotted-color) 0 3px,
+    transparent 3px 7px
+  );
+  translate: -50% 0;
+}
+
+.containerLine {
+  position: absolute;
+  z-index: 2;
+  inset-block: 0;
+  inset-inline-start: var(--timeline-cursor-x, 0px);
+  background: var(--timeline-cursor-solid-color);
+  translate: -50% 0;
+}
+
+.pointer {
+  position: fixed;
+  z-index: 3;
+  inset-block-start: var(--timeline-cursor-viewport-y, 0px);
+  inset-inline-start: var(--timeline-cursor-viewport-x, 0px);
+  inline-size: 12px;
+  block-size: 12px;
+  translate: -50% -50%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pageLine,
+  .containerLine,
+  .pointer {
+    transition: none;
+  }
+}

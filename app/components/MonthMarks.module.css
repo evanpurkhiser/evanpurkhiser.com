@@ -1,0 +1,26 @@
+.marks {
+  position: relative;
+  block-size: 10px;
+  color: var(--color-text-muted);
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  line-height: 1;
+}
+
+.mark {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: clamp(1.5ch, var(--month-mark-position), calc(100% - 1.5ch));
+  translate: -50% 0;
+  user-select: none;
+}
+
+.loading {
+  visibility: hidden;
+}
+
+@media (max-width: 620px) {
+  .mark:nth-child(even) {
+    display: none;
+  }
+}

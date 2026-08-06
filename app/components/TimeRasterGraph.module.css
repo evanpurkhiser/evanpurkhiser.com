@@ -1,0 +1,79 @@
+.container {
+  position: relative;
+}
+
+.placeholder {
+  inline-size: 100%;
+  block-size: var(--time-raster-chart-height);
+  background: linear-gradient(
+    to bottom,
+    var(--time-raster-empty) 0 var(--time-raster-height),
+    transparent var(--time-raster-height)
+  );
+}
+
+.graph {
+  display: block;
+  inline-size: 100%;
+  overflow: hidden;
+  background: var(--time-raster-empty, var(--color-canvas));
+}
+
+.baseLayer {
+  opacity: 1;
+  transition: opacity 100ms ease-out;
+}
+
+.colorLayer {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black var(--time-raster-reveal-fade),
+    black calc(var(--time-raster-reveal-width) - var(--time-raster-reveal-fade)),
+    transparent var(--time-raster-reveal-width)
+  );
+  mask-repeat: no-repeat;
+  mask-position: calc(
+      var(--timeline-cursor-x, 0px) - var(--time-raster-reveal-half-width)
+    )
+    0;
+  mask-size: var(--time-raster-reveal-width) 100%;
+}
+
+:global([data-timeline-cursor-active]) .colorLayer {
+  opacity: 1;
+}
+
+:global([data-timeline-cursor-active]) .baseLayer {
+  opacity: 0.9;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .baseLayer {
+    transition: none;
+  }
+}
+
+.bucket {
+  fill: color-mix(
+    in oklch,
+    color-mix(
+      in oklch,
+      var(--time-raster-empty, var(--color-canvas)),
+      var(
+          --time-raster-dark,
+          color-mix(in oklch, var(--color-canvas), var(--color-orange) 45%)
+        )
+        var(--time-raster-dark-intensity)
+    ),
+    var(--time-raster-color, var(--color-orange)) var(--time-raster-color-intensity)
+  );
+}
+
+.monthTick {
+  fill: var(--time-raster-tick, var(--color-text-muted));
+}
