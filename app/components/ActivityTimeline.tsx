@@ -4,10 +4,10 @@ import {useEffect, useMemo, useState} from 'react';
 
 import {
   dailyActivityToTimeRaster,
-  type DailyActivity,
   loadAtuinActivity,
   loadGitHubActivity,
 } from '../lib/activityAdapters';
+import type {DailyActivity} from '../lib/dailyActivity';
 
 import styles from './ActivityTimeline.module.css';
 import MonthMarks from './MonthMarks';
