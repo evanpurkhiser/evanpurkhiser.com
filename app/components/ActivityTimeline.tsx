@@ -87,7 +87,7 @@ function ActivityGraph({
     ? 'unavailable'
     : loading
       ? 'loading…'
-      : `${total.toLocaleString()} data points`;
+      : `${total.toLocaleString()} records / 365 days`;
 
   return (
     <section className={styles.demo} aria-labelledby={id}>
