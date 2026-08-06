@@ -32,6 +32,7 @@ type ActivityGraphProps = {
   intensityExponent?: number;
   revealColor?: string;
   revealDarkColor?: string;
+  showRevealMonthTicks?: boolean;
 };
 
 type ActivityLoader = (signal: AbortSignal) => Promise<DailyActivity[]>;
@@ -77,6 +78,7 @@ function ActivityGraph({
   intensityExponent,
   revealColor,
   revealDarkColor,
+  showRevealMonthTicks,
 }: ActivityGraphProps) {
   const {activity, failed, rasterData, start, end} = source;
   const total = activity.reduce((sum, bucket) => sum + bucket.count, 0);
@@ -103,6 +105,7 @@ function ActivityGraph({
         intensityExponent={intensityExponent}
         revealColor={revealColor}
         revealDarkColor={revealDarkColor}
+        showRevealMonthTicks={showRevealMonthTicks}
         loading={loading}
         emptyColor={loading ? 'var(--color-surface)' : undefined}
         aria-label={`${label} activity over the last 365 days`}
@@ -141,6 +144,7 @@ export default function ActivityTimeline() {
             intensityExponent={INTENSITY_EXPONENT}
             revealColor={palettes.github.color}
             revealDarkColor={palettes.github.darkColor}
+            showRevealMonthTicks={false}
           />
         </div>
         <MonthMarks loading={!hasGitHubActivity} start={github.start} end={github.end} />

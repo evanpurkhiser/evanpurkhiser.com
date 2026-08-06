@@ -40,6 +40,7 @@ type TimeRasterGraphProps = {
   revealWidth?: number;
   scale?: 'linear' | 'log';
   showMonthTicks?: boolean;
+  showRevealMonthTicks?: boolean;
   tickColor?: string;
 };
 
@@ -184,6 +185,7 @@ export default function TimeRasterGraph({
   revealWidth = 100,
   scale = 'log',
   showMonthTicks = true,
+  showRevealMonthTicks = true,
   tickColor = 'var(--color-text-muted)',
 }: TimeRasterGraphProps) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -338,7 +340,7 @@ export default function TimeRasterGraph({
                   height={height + REVEAL_BACKGROUND_INSET * 2}
                 />
                 {renderBuckets()}
-                {renderMonthTicks()}
+                {showRevealMonthTicks && renderMonthTicks()}
               </svg>
             )}
           </>
