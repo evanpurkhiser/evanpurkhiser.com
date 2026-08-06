@@ -1,0 +1,41 @@
+.collection {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  cursor: none;
+}
+
+.graphs {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.demo {
+  display: grid;
+  gap: 5px;
+}
+
+.heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 24px;
+  font-family: 'Inter', sans-serif;
+}
+
+.heading h2 {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.heading span {
+  color: var(--color-text-muted);
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.05em;
+}
