@@ -36,7 +36,7 @@
 .heading h2 {
   font-family: var(--font-dm-mono), monospace;
   font-size: 10px;
-  font-weight: 500;
+  font-weight: 300;
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
