@@ -1,7 +1,8 @@
 import './globals.css';
 
 import type {Metadata} from 'next';
-import {DM_Mono, Inter, Syncopate} from 'next/font/google';
+import {DM_Mono, Inter} from 'next/font/google';
+import localFont from 'next/font/local';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -15,10 +16,16 @@ const dmMono = DM_Mono({
   variable: '--font-dm-mono',
 });
 
-const syncopate = Syncopate({
-  subsets: ['latin'],
+const syncopate = localFont({
+  src: './fonts/syncopate-latin-700.woff2',
   weight: '700',
   variable: '--font-syncopate',
+  adjustFontFallback: false,
+  declarations: [
+    {prop: 'ascent-override', value: '95%'},
+    {prop: 'descent-override', value: '25%'},
+    {prop: 'line-gap-override', value: '0%'},
+  ],
 });
 
 const revealFontsScript = `
