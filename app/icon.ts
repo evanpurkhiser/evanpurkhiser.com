@@ -1,7 +1,9 @@
+import {createFramedMarkSvg} from './components/Mark';
+
 const variants = [
-  {id: '16', size: 16, stroke: 1.5, margin: 1},
-  {id: '32', size: 32, stroke: 3, margin: 2},
-  {id: '48', size: 48, stroke: 4, margin: 4},
+  {id: '16', size: 16, radius: 4, padding: 1, strokeWidth: 1},
+  {id: '32', size: 32, radius: 6, padding: 4, strokeWidth: 2},
+  {id: '48', size: 48, radius: 8, padding: 6, strokeWidth: 3},
 ];
 
 export function generateImageMetadata() {
@@ -20,20 +22,7 @@ export default async function Icon({id}: {id: Promise<string>}) {
     return new Response(null, {status: 404});
   }
 
-  const {size, stroke, margin} = variant;
-  const center = size / 2;
-  const radius = center - margin - stroke / 2;
-  const diagonal = radius / Math.SQRT2;
-  const lines = [
-    [center, center - radius, center, center + radius],
-    [center - radius, center, center + radius, center],
-    [center - diagonal, center + diagonal, center + diagonal, center - diagonal],
-    [center + diagonal, center + diagonal, center - diagonal, center - diagonal],
-  ];
-  const paths = lines
-    .map(([x1, y1, x2, y2]) => `<path d="M${x1} ${y1}L${x2} ${y2}"/>`)
-    .join('');
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" fill="none" stroke="#ff6800" stroke-width="${stroke}" stroke-linecap="round">${paths}</svg>`;
+  const svg = createFramedMarkSvg({...variant, stroke: '#000'});
 
   return new Response(svg, {headers: {'Content-Type': 'image/svg+xml'}});
 }
