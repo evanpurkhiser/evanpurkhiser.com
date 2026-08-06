@@ -34,6 +34,7 @@ body {
   grid-template-rows: min(20dvh, 200px) max-content 1fr;
   min-block-size: 100dvb;
   justify-items: center;
+  padding-block-end: min(20dvh, 200px);
 }
 
 ::selection {
@@ -45,7 +46,7 @@ main {
   display: grid;
   grid-row: 2;
   inline-size: min(800px, calc(100% - 92px));
-  gap: 72px;
+  gap: 36px;
   block-size: fit-content;
 }
 
@@ -64,7 +65,7 @@ main {
 .intro-mark {
   position: absolute;
   inset-block-start: 50%;
-  inset-inline-end: calc(100% + 4px);
+  inset-inline-end: calc(100% + 12px);
   color: var(--color-orange);
   translate: 0 -50%;
 }

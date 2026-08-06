@@ -14,7 +14,7 @@ export default function RootLayout({children}: Readonly<{children: React.ReactNo
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=DM+Mono&family=Inter:wght@300;600&family=Syncopate:wght@700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=DM+Mono&family=Inter:wght@300;400;600&family=Syncopate:wght@700&display=swap"
           rel="stylesheet"
         />
       </head>
