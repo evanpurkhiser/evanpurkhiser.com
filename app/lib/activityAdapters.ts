@@ -1,35 +1,13 @@
 import type {TimeRasterDatum} from '../components/TimeRasterGraph';
 
-const ATUIN_URL =
-  'https://apis.evanpurkhiser.com/atuin-abacus/history?period=1y&rollup=1d';
+import {type DailyActivity, isDailyActivity} from './dailyActivity';
+
+const ATUIN_URL = '/api/atuin-activity';
 const GITHUB_URL = '/api/github-contributions';
 const DAY = 24 * 60 * 60 * 1000;
 
-export type DailyActivity = {
-  date: string;
-  count: number;
-};
-
-function isDailyActivity(value: unknown): value is DailyActivity[] {
-  return (
-    Array.isArray(value) &&
-    value.every(
-      item =>
-        typeof item === 'object' &&
-        item !== null &&
-        typeof item.date === 'string' &&
-        typeof item.count === 'number',
-    )
-  );
-}
-
-async function fetchDailyActivity(
-  source: string,
-  url: string,
-  signal: AbortSignal,
-  headers?: HeadersInit,
-) {
-  const response = await fetch(url, {headers, signal});
+async function fetchDailyActivity(source: string, url: string, signal: AbortSignal) {
+  const response = await fetch(url, {signal});
 
   if (!response.ok) {
     throw new Error(`${source} returned ${response.status}`);
@@ -45,9 +23,7 @@ async function fetchDailyActivity(
 }
 
 export function loadAtuinActivity(signal: AbortSignal) {
-  return fetchDailyActivity('Atuin Abacus', ATUIN_URL, signal, {
-    Prefer: 'timezone=America/New_York',
-  });
+  return fetchDailyActivity('Atuin Abacus', ATUIN_URL, signal);
 }
 
 export function loadGitHubActivity(signal: AbortSignal) {

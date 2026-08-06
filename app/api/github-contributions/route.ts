@@ -1,8 +1,9 @@
 import {getCloudflareContext} from '@opennextjs/cloudflare';
 
+import {cachedJsonResponse} from '../../lib/serverCache';
+
 const GITHUB_API_URL = 'https://api.github.com/graphql';
 const GITHUB_LOGIN = 'evanpurkhiser';
-const CACHE_TTL = 60 * 60 * 1000;
 const YEAR = 365 * 24 * 60 * 60 * 1000;
 
 const CONTRIBUTIONS_QUERY = `
@@ -22,11 +23,6 @@ const CONTRIBUTIONS_QUERY = `
   }
 `;
 
-type Contribution = {
-  date: string;
-  count: number;
-};
-
 type ContributionDay = {
   date: string;
   contributionCount: number;
@@ -45,15 +41,8 @@ type GitHubResponse = {
   errors?: Array<{message: string}>;
 };
 
-type CacheEntry = {
-  expiresAt: number;
-  contributions: Contribution[];
-};
-
 class GitHubApiError extends Error {}
-
-let cache: CacheEntry | undefined;
-let pendingRequest: Promise<Contribution[]> | undefined;
+class MissingGitHubTokenError extends Error {}
 
 async function getGitHubToken() {
   const processToken = process.env.GITHUB_TOKEN?.trim();
@@ -118,45 +107,25 @@ async function fetchContributions(token: string) {
     .toSorted((left, right) => left.date.localeCompare(right.date));
 }
 
-async function getContributions(token: string) {
-  if (cache && cache.expiresAt > Date.now()) {
-    return {contributions: cache.contributions, cacheStatus: 'HIT'} as const;
-  }
-
-  const cacheStatus = pendingRequest ? 'HIT' : 'MISS';
-
-  pendingRequest ??= fetchContributions(token)
-    .then(contributions => {
-      cache = {contributions, expiresAt: Date.now() + CACHE_TTL};
-      return contributions;
-    })
-    .finally(() => {
-      pendingRequest = undefined;
-    });
-
-  return {contributions: await pendingRequest, cacheStatus} as const;
-}
-
-export async function GET() {
-  const token = await getGitHubToken();
-
-  if (!token) {
-    return Response.json(
-      {error: 'GitHub token is not configured'},
-      {status: 503, headers: {'Cache-Control': 'no-store'}},
-    );
-  }
-
+export async function GET(request: Request) {
   try {
-    const {contributions, cacheStatus} = await getContributions(token);
+    return await cachedJsonResponse(request, async () => {
+      const token = await getGitHubToken();
 
-    return Response.json(contributions, {
-      headers: {
-        'Cache-Control': 'no-store',
-        'X-Memory-Cache': cacheStatus,
-      },
+      if (!token) {
+        throw new MissingGitHubTokenError();
+      }
+
+      return fetchContributions(token);
     });
   } catch (error) {
+    if (error instanceof MissingGitHubTokenError) {
+      return Response.json(
+        {error: 'GitHub token is not configured'},
+        {status: 503, headers: {'Cache-Control': 'no-store'}},
+      );
+    }
+
     console.error('Failed to load GitHub contributions', error);
 
     return Response.json(
