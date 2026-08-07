@@ -10,6 +10,8 @@ import {
   type RefObject,
 } from 'react';
 
+import {useMotionValue} from 'framer-motion';
+
 import styles from './TimelineCursor.module.css';
 
 type TimelineCursorOptions = {
@@ -38,26 +40,44 @@ function useTimelineCursor<E extends HTMLElement>({
   const containerRef = useRef<E>(null);
   const frameRef = useRef<number | null>(null);
   const [active, setActive] = useState(false);
+  const x = useMotionValue(0);
+  const width = useMotionValue(0);
 
-  const updatePosition = useCallback((clientX: number) => {
-    if (frameRef.current !== null) {
-      window.cancelAnimationFrame(frameRef.current);
-    }
-
-    frameRef.current = window.requestAnimationFrame(() => {
-      const container = containerRef.current;
-
-      if (!container) {
-        return;
+  const updatePosition = useCallback(
+    (clientX: number) => {
+      if (frameRef.current !== null) {
+        window.cancelAnimationFrame(frameRef.current);
       }
 
-      const bounds = container.getBoundingClientRect();
-      const offset = Math.min(bounds.width, Math.max(0, clientX - bounds.left));
+      frameRef.current = window.requestAnimationFrame(() => {
+        const container = containerRef.current;
 
-      container.style.setProperty('--timeline-cursor-x', `${offset}px`);
-      container.style.setProperty('--timeline-cursor-viewport-x', `${clientX}px`);
-    });
-  }, []);
+        if (!container) {
+          return;
+        }
+
+        const bounds = container.getBoundingClientRect();
+        const offset = Math.min(bounds.width, Math.max(0, clientX - bounds.left));
+
+        x.set(offset);
+        width.set(bounds.width);
+        container.style.setProperty('--timeline-cursor-x', `${offset}px`);
+        container.style.setProperty('--timeline-cursor-viewport-x', `${clientX}px`);
+
+        container
+          .querySelectorAll<HTMLElement>('[data-timeline-cursor-label-track]')
+          .forEach(track => {
+            const trackBounds = track.getBoundingClientRect();
+
+            track.style.setProperty(
+              '--timeline-cursor-label-x',
+              `${clientX - trackBounds.left}px`,
+            );
+          });
+      });
+    },
+    [width, x],
+  );
 
   const handlePointerEnter = useCallback(
     (event: ReactPointerEvent<E>) => {
@@ -108,7 +128,7 @@ function useTimelineCursor<E extends HTMLElement>({
     onPointerLeave: handlePointerLeave,
   };
 
-  return {active, containerProps};
+  return {active, containerProps, width, x};
 }
 
 function TimelineCursor({

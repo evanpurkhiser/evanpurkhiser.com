@@ -1,6 +1,13 @@
 'use client';
 
-import {useEffect, useMemo, useState} from 'react';
+import {useEffect, useMemo, useRef, useState} from 'react';
+
+import {
+  useMotionValueEvent,
+  useSpring,
+  useTransform,
+  type MotionValue,
+} from 'framer-motion';
 
 import {
   dailyActivityToTimeRaster,
@@ -8,6 +15,7 @@ import {
   loadGitHubActivity,
 } from '../lib/activityAdapters';
 import type {DailyActivity} from '../lib/dailyActivity';
+import {type DateValue, toTimestamp} from '../lib/timeRange';
 
 import styles from './ActivityTimeline.module.css';
 import MonthMarks from './MonthMarks';
@@ -16,6 +24,7 @@ import TimeRasterGraph from './TimeRasterGraph';
 
 const DAY = 24 * 60 * 60 * 1000;
 const INTENSITY_EXPONENT = 2;
+const REVEAL_WIDTH = 100;
 
 const palettes = {
   terminalActivity: {darkColor: '#ffa96e', color: '#ff6800'},
@@ -25,6 +34,8 @@ const palettes = {
 
 type ActivityGraphProps = {
   active: boolean;
+  cursorWidth: MotionValue<number>;
+  cursorX: MotionValue<number>;
   id: string;
   label: string;
   source: ActivitySource;
@@ -39,6 +50,49 @@ type ActivityGraphProps = {
 
 type ActivityLoader = (signal: AbortSignal) => Promise<DailyActivity[]>;
 type ActivitySource = ReturnType<typeof useActivity>;
+
+function getWindowTotal(
+  data: ReadonlyArray<{start: DateValue; value: number}>,
+  start: DateValue,
+  end: DateValue,
+  cursorX: number,
+  cursorWidth: number,
+  revealWidth: number,
+) {
+  const startTimestamp = toTimestamp(start);
+  const duration = toTimestamp(end) - startTimestamp;
+
+  if (duration <= 0 || cursorWidth <= 0) {
+    return 0;
+  }
+
+  const halfWindow = (duration * revealWidth) / cursorWidth / 2;
+  const center = startTimestamp + (duration * cursorX) / cursorWidth;
+  const windowStart = center - halfWindow;
+  const windowEnd = center + halfWindow;
+
+  return data.reduce((total, datum) => {
+    const timestamp = toTimestamp(datum.start);
+
+    return timestamp >= windowStart && timestamp < windowEnd
+      ? total + datum.value
+      : total;
+  }, 0);
+}
+
+function MotionNumber({value}: {value: MotionValue<number>}) {
+  const ref = useRef<HTMLSpanElement>(null);
+
+  useMotionValueEvent(value, 'change', latest => {
+    if (!ref.current) {
+      return;
+    }
+
+    ref.current.textContent = `${Math.round(latest).toLocaleString()}×`;
+  });
+
+  return <span ref={ref}>0×</span>;
+}
 
 function useActivity(load: ActivityLoader) {
   const [activity, setActivity] = useState<DailyActivity[]>([]);
@@ -73,6 +127,8 @@ function useActivity(load: ActivityLoader) {
 
 function ActivityGraph({
   active,
+  cursorWidth,
+  cursorX,
   id,
   label,
   source,
@@ -97,6 +153,21 @@ function ActivityGraph({
     : loading
       ? `${label} loading`
       : `${total.toLocaleString()} entries over 365 days`;
+  const windowTotal = useTransform(() =>
+    getWindowTotal(
+      rasterData,
+      start,
+      end,
+      cursorX.get(),
+      cursorWidth.get(),
+      REVEAL_WIDTH,
+    ),
+  );
+  const animatedWindowTotal = useSpring(windowTotal, {
+    damping: 80,
+    mass: 0.1,
+    stiffness: 1000,
+  });
 
   return (
     <section className={styles.activityGraph} aria-labelledby={id}>
@@ -111,7 +182,16 @@ function ActivityGraph({
           )}
           {label}
         </h2>
-        <span role="status" aria-label={summaryLabel}>
+        <span
+          className={styles.cursorLabelTrack}
+          data-timeline-cursor-label-track
+          aria-hidden="true"
+        >
+          <span className={styles.cursorLabel}>
+            <MotionNumber value={animatedWindowTotal} />
+          </span>
+        </span>
+        <span className={styles.summary} role="status" aria-label={summaryLabel}>
           {summary}
         </span>
       </div>
@@ -126,6 +206,7 @@ function ActivityGraph({
         intensityExponent={intensityExponent}
         revealColor={revealColor}
         revealDarkColor={revealDarkColor}
+        revealWidth={REVEAL_WIDTH}
         showRevealMonthTicks={showRevealMonthTicks}
         loading={loading}
         emptyColor={loading ? 'var(--color-surface)' : undefined}
@@ -148,6 +229,8 @@ export default function ActivityTimeline() {
         <div className={styles.graphs}>
           <ActivityGraph
             active={cursor.active}
+            cursorWidth={cursor.width}
+            cursorX={cursor.x}
             id="terminal-activity-title"
             label="Terminal"
             source={terminalActivity}
@@ -160,6 +243,8 @@ export default function ActivityTimeline() {
           />
           <ActivityGraph
             active={cursor.active}
+            cursorWidth={cursor.width}
+            cursorX={cursor.x}
             id="github-title"
             label="GitHub"
             source={github}
