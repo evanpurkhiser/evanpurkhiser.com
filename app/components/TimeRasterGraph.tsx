@@ -339,7 +339,14 @@ export default function TimeRasterGraph({
                 shapeRendering="crispEdges"
                 aria-hidden="true"
               >
-                <mask id={maskId} maskUnits="userSpaceOnUse">
+                <mask
+                  id={maskId}
+                  x={-REVEAL_BACKGROUND_INSET}
+                  y={-REVEAL_BACKGROUND_INSET}
+                  width={graphWidth + REVEAL_BACKGROUND_INSET * 2}
+                  height={chartHeight + REVEAL_BACKGROUND_INSET * 2}
+                  maskUnits="userSpaceOnUse"
+                >
                   <motion.rect
                     className={styles.revealMask}
                     y={-REVEAL_BACKGROUND_INSET}
