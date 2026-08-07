@@ -92,7 +92,7 @@ function ActivityGraph({
       : `${total.toLocaleString()} records / 365d`;
 
   return (
-    <section className={styles.demo} aria-labelledby={id}>
+    <section className={styles.activityGraph} aria-labelledby={id}>
       <div className={styles.heading}>
         <h2 id={id}>{label}</h2>
         <span aria-live="polite">{summary}</span>
