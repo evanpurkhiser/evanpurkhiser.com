@@ -28,6 +28,7 @@ type ActivityGraphProps = {
   id: string;
   label: string;
   source: ActivitySource;
+  indicatorColor?: string;
   color?: string;
   darkColor?: string;
   intensityExponent?: number;
@@ -75,6 +76,7 @@ function ActivityGraph({
   id,
   label,
   source,
+  indicatorColor,
   color,
   darkColor,
   intensityExponent,
@@ -89,13 +91,29 @@ function ActivityGraph({
     ? 'unavailable'
     : loading
       ? 'loading…'
-      : `${total.toLocaleString()} records / 365d`;
+      : `${total.toLocaleString()}× / 365d`;
+  const summaryLabel = failed
+    ? `${label} unavailable`
+    : loading
+      ? `${label} loading`
+      : `${total.toLocaleString()} entries over 365 days`;
 
   return (
     <section className={styles.activityGraph} aria-labelledby={id}>
       <div className={styles.heading}>
-        <h2 id={id}>{label}</h2>
-        <span aria-live="polite">{summary}</span>
+        <h2 id={id}>
+          {indicatorColor && (
+            <span
+              className={styles.indicator}
+              style={{backgroundColor: indicatorColor}}
+              aria-hidden="true"
+            />
+          )}
+          {label}
+        </h2>
+        <span role="status" aria-label={summaryLabel}>
+          {summary}
+        </span>
       </div>
 
       <TimeRasterGraph
@@ -131,8 +149,9 @@ export default function ActivityTimeline() {
           <ActivityGraph
             active={cursor.active}
             id="terminal-activity-title"
-            label="Terminal Activity"
+            label="Terminal"
             source={terminalActivity}
+            indicatorColor={palettes.terminalActivity.color}
             color={palette.color}
             darkColor={palette.darkColor}
             intensityExponent={INTENSITY_EXPONENT}
@@ -142,8 +161,9 @@ export default function ActivityTimeline() {
           <ActivityGraph
             active={cursor.active}
             id="github-title"
-            label="GitHub Activity"
+            label="GitHub"
             source={github}
+            indicatorColor={palettes.github.color}
             color={palette.color}
             darkColor={palette.darkColor}
             intensityExponent={INTENSITY_EXPONENT}

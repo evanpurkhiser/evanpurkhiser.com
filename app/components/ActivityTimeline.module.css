@@ -34,6 +34,9 @@
 }
 
 .heading h2 {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   font-family: var(--font-dm-mono), monospace;
   font-size: 10px;
   font-weight: 300;
@@ -41,7 +44,13 @@
   text-transform: uppercase;
 }
 
-.heading span {
+.indicator {
+  inline-size: 6px;
+  block-size: 6px;
+  border-radius: 50%;
+}
+
+.heading > span {
   color: var(--color-text-muted);
   font-family: var(--font-dm-mono), monospace;
   font-size: 10px;
