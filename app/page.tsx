@@ -9,6 +9,7 @@ export default function Home() {
         <div className="intro-title">
           <Mark className="intro-mark" strokeWidth={1.25} aria-hidden="true" />
           <h1>Evan Purkhiser</h1>
+          <SocialLinks />
         </div>
         <p>
           I&apos;m a Software Engineer with a love of building. Interested in every layer,
@@ -17,8 +18,6 @@ export default function Home() {
       </header>
 
       <ActivityTimeline />
-
-      <SocialLinks />
     </main>
   );
 }

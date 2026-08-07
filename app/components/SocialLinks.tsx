@@ -1,3 +1,9 @@
+'use client';
+
+import {useState} from 'react';
+
+import {AnimatePresence, motion, useReducedMotion} from 'framer-motion';
+
 import styles from './SocialLinks.module.css';
 
 const links = [
@@ -14,19 +20,71 @@ const links = [
   {
     label: 'Resume',
     href: 'https://resume.evanpurkhiser.com',
-    path: 'M5 2h10l4 4v16H5V2Zm2 2v16h10V8h-4V4H7Zm8 .8V6h1.2L15 4.8ZM9 11h6v2H9v-2Zm0 4h6v2H9v-2Z',
+    path: 'M9.6 8.25a3.75 3.75 0 1 0 0 7.5 3.7 3.7 0 0 0 2.65-1.1l-1.4-1.4a1.75 1.75 0 1 1 0-2.5l1.4-1.4a3.7 3.7 0 0 0-2.65-1.1Zm2.65 0h2.1l1.65 4.9 1.65-4.9h2.1L17 15.75h-2l-2.75-7.5Z',
+    framed: true,
   },
 ];
 
 export default function SocialLinks() {
+  const [activeLink, setActiveLink] = useState<string | null>(null);
+  const shouldReduceMotion = useReducedMotion();
+
   return (
-    <nav className={styles.links} aria-label="Elsewhere">
-      {links.map(({label, href, path}) => (
-        <a className={styles.link} href={href} key={label}>
+    <nav
+      className={styles.links}
+      aria-label="Elsewhere"
+      onMouseLeave={() => setActiveLink(null)}
+      onBlur={event => {
+        if (!event.currentTarget.contains(event.relatedTarget)) {
+          setActiveLink(null);
+        }
+      }}
+    >
+      {links.map(({label, href, path, framed}) => (
+        <a
+          className={styles.link}
+          href={href}
+          aria-label={label}
+          target="_blank"
+          rel="noopener noreferrer"
+          key={label}
+          onMouseEnter={() => setActiveLink(label)}
+          onFocus={() => setActiveLink(label)}
+        >
+          <AnimatePresence>
+            {activeLink === label && (
+              <motion.span
+                className={styles.surface}
+                layoutId="social-link-surface"
+                initial={{opacity: 0}}
+                animate={{opacity: 1}}
+                exit={{opacity: 0}}
+                transition={
+                  shouldReduceMotion
+                    ? {duration: 0}
+                    : {
+                        layout: {type: 'spring', stiffness: 500, damping: 35},
+                        opacity: {duration: 0.15},
+                      }
+                }
+              />
+            )}
+          </AnimatePresence>
           <svg className={styles.icon} viewBox="0 0 24 24" aria-hidden="true">
-            <path d={path} fillRule={label === 'Resume' ? 'evenodd' : undefined} />
+            {framed && (
+              <rect
+                x="0.75"
+                y="3.75"
+                width="22.5"
+                height="16.5"
+                rx="3"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+              />
+            )}
+            <path d={path} />
           </svg>
-          {label}
         </a>
       ))}
     </nav>

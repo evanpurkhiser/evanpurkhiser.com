@@ -1,39 +1,43 @@
 .links {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 24px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .link {
+  position: relative;
   display: flex;
-  min-inline-size: 0;
-  min-block-size: 60px;
   align-items: center;
-  gap: 8px;
-  background: var(--color-canvas);
+  justify-content: center;
+  padding: 6px;
   color: var(--color-text);
-  font-family: var(--font-inter), sans-serif;
-  font-size: 13px;
-  font-weight: 400;
   text-decoration: none;
 }
 
+.surface {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  border-radius: 7px;
+  background: var(--color-surface);
+}
+
 .icon {
-  flex: 0 0 18px;
-  inline-size: 18px;
-  block-size: 18px;
+  position: relative;
+  z-index: 1;
+  flex: 0 0 20px;
+  inline-size: 20px;
+  block-size: 20px;
   fill: currentColor;
 }
 
 @media (max-width: 620px) {
   .links {
-    gap: 12px;
+    gap: 2px;
   }
 
   .link {
-    min-block-size: 52px;
-    gap: 5px;
-    font-size: 11px;
+    padding: 5px 4px;
   }
 
   .icon {

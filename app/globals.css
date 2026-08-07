@@ -54,6 +54,9 @@ main {
 
 .intro-title {
   position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .intro-mark {
@@ -65,6 +68,7 @@ main {
 }
 
 h1 {
+  margin-inline-end: auto;
   font-family: var(--font-syncopate), sans-serif;
   font-size: 26px;
   font-weight: 700;
@@ -83,6 +87,7 @@ h1 {
   font-size: 22px;
   font-weight: 300;
   line-height: 1.45;
+  text-wrap: pretty;
 }
 
 @media (max-width: 620px) {
@@ -105,25 +110,23 @@ h1 {
   }
 
   .intro-title {
-    display: flex;
-    align-items: center;
-    gap: 9px;
+    gap: 7px;
   }
 
   .intro-mark {
     position: static;
-    inline-size: 18px;
-    block-size: 18px;
+    inline-size: 16px;
+    block-size: 16px;
     translate: none;
   }
 
   h1 {
-    font-size: 21px;
+    font-size: 19px;
     translate: none;
   }
 
   .intro p {
-    font-size: 18px;
+    font-size: 17px;
     line-height: 1.4;
   }
 }
