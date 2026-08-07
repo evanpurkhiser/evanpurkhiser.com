@@ -12,8 +12,8 @@ export default function Home() {
           <SocialLinks />
         </div>
         <p>
-          I&apos;m a Software Engineer with a love of building. Interested in every layer,
-          from systems architecture to the smallest interaction details.
+          Building things for fun and profit since I can remember. Interested in every
+          layer, from systems architecture to the smallest interaction details.
         </p>
       </header>
 
