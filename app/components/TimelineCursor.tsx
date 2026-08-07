@@ -25,8 +25,9 @@ type TimelineCursorProps = {
 
 type CursorContainerProps<E extends HTMLElement> = {
   'data-timeline-cursor-active': true | undefined;
+  onPointerCancel: () => void;
   onPointerEnter: (event: ReactPointerEvent<E>) => void;
-  onPointerLeave: (event: ReactPointerEvent<E>) => void;
+  onPointerLeave: () => void;
   onPointerMove: (event: ReactPointerEvent<E>) => void;
   ref: RefObject<E | null>;
 };
@@ -60,7 +61,7 @@ function useTimelineCursor<E extends HTMLElement>({
 
   const handlePointerEnter = useCallback(
     (event: ReactPointerEvent<E>) => {
-      if (!enabled || event.pointerType === 'touch') {
+      if (!enabled) {
         return;
       }
 
@@ -72,7 +73,7 @@ function useTimelineCursor<E extends HTMLElement>({
 
   const handlePointerMove = useCallback(
     (event: ReactPointerEvent<E>) => {
-      if (!enabled || event.pointerType === 'touch') {
+      if (!enabled) {
         return;
       }
 
@@ -81,11 +82,7 @@ function useTimelineCursor<E extends HTMLElement>({
     [enabled, updatePosition],
   );
 
-  const handlePointerLeave = useCallback((event: ReactPointerEvent<E>) => {
-    if (event.pointerType !== 'touch') {
-      setActive(false);
-    }
-  }, []);
+  const handlePointerLeave = useCallback(() => setActive(false), []);
 
   useEffect(() => {
     if (!enabled) {
@@ -105,6 +102,7 @@ function useTimelineCursor<E extends HTMLElement>({
   const containerProps: CursorContainerProps<E> = {
     ref: containerRef,
     'data-timeline-cursor-active': active || undefined,
+    onPointerCancel: handlePointerLeave,
     onPointerEnter: handlePointerEnter,
     onPointerMove: handlePointerMove,
     onPointerLeave: handlePointerLeave,
