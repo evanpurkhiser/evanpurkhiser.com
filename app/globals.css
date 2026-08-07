@@ -13,6 +13,7 @@
   --color-text: #27292e;
   --color-text-soft: #555961;
   --color-text-muted: #858a94;
+  --content-gutter: 46px;
 
   background: var(--color-canvas);
   color: var(--color-text);
@@ -38,7 +39,7 @@ body {
 main {
   display: grid;
   grid-row: 2;
-  inline-size: min(800px, calc(100% - 92px));
+  inline-size: min(800px, calc(100% - var(--content-gutter) * 2));
   gap: 36px;
   block-size: fit-content;
 }
@@ -82,5 +83,47 @@ h1 {
   font-size: 22px;
   font-weight: 300;
   line-height: 1.45;
-  text-wrap: balance;
+}
+
+@media (max-width: 620px) {
+  :root {
+    --content-gutter: 20px;
+  }
+
+  body {
+    grid-template-rows: 48px max-content 1fr;
+    padding-block-end: min(14dvh, 112px);
+  }
+
+  main {
+    inline-size: calc(100% - var(--content-gutter) * 2);
+    gap: 24px;
+  }
+
+  .intro {
+    row-gap: 28px;
+  }
+
+  .intro-title {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+  }
+
+  .intro-mark {
+    position: static;
+    inline-size: 18px;
+    block-size: 18px;
+    translate: none;
+  }
+
+  h1 {
+    font-size: 21px;
+    translate: none;
+  }
+
+  .intro p {
+    font-size: 18px;
+    line-height: 1.4;
+  }
 }
