@@ -1,7 +1,8 @@
 'use client';
 
-import {useEffect, useMemo, useRef, useState} from 'react';
+import {useMemo, useRef} from 'react';
 
+import {useQuery, type QueryFunction} from '@tanstack/react-query';
 import {
   useMotionValueEvent,
   useSpring,
@@ -48,7 +49,6 @@ type ActivityGraphProps = {
   showRevealMonthTicks?: boolean;
 };
 
-type ActivityLoader = (signal: AbortSignal) => Promise<DailyActivity[]>;
 type ActivitySource = ReturnType<typeof useActivity>;
 
 function getWindowTotal(
@@ -94,31 +94,25 @@ function MotionNumber({value}: {value: MotionValue<number>}) {
   return <span ref={ref}>0×</span>;
 }
 
-function useActivity(load: ActivityLoader) {
-  const [activity, setActivity] = useState<DailyActivity[]>([]);
-  const [failed, setFailed] = useState(false);
-
-  useEffect(() => {
-    const controller = new AbortController();
-
-    load(controller.signal)
-      .then(setActivity)
-      .catch(error => {
-        if (error instanceof DOMException && error.name === 'AbortError') {
-          return;
-        }
-
-        setFailed(true);
-      });
-
-    return () => controller.abort();
-  }, [load]);
+function useActivity(
+  queryKey: readonly string[],
+  queryFn: QueryFunction<DailyActivity[]>,
+) {
+  const {
+    data: activity = [],
+    isError: failed,
+    isPending: loading,
+  } = useQuery({
+    queryKey,
+    queryFn,
+  });
 
   const rasterData = useMemo(() => dailyActivityToTimeRaster(activity), [activity]);
 
   return {
     activity,
     failed,
+    loading,
     rasterData,
     start: rasterData.at(0)?.start ?? 0,
     end: rasterData.at(-1)?.end ?? DAY,
@@ -140,9 +134,8 @@ function ActivityGraph({
   revealDarkColor,
   showRevealMonthTicks,
 }: ActivityGraphProps) {
-  const {activity, failed, rasterData, start, end} = source;
+  const {activity, failed, loading, rasterData, start, end} = source;
   const total = activity.reduce((sum, bucket) => sum + bucket.count, 0);
-  const loading = !failed && activity.length === 0;
   const summary = failed
     ? 'unavailable'
     : loading
@@ -218,8 +211,8 @@ function ActivityGraph({
 
 export default function ActivityTimeline() {
   const palette = palettes.monochrome;
-  const terminalActivity = useActivity(loadAtuinActivity);
-  const github = useActivity(loadGitHubActivity);
+  const terminalActivity = useActivity(['activity', 'atuin'], loadAtuinActivity);
+  const github = useActivity(['activity', 'github'], loadGitHubActivity);
   const cursor = useTimelineCursor<HTMLDivElement>();
   const hasGitHubActivity = github.activity.length > 0;
 

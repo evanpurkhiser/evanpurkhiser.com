@@ -4,6 +4,8 @@ import type {Metadata} from 'next';
 import {DM_Mono, Inter} from 'next/font/google';
 import localFont from 'next/font/local';
 
+import QueryProvider from './components/QueryProvider';
+
 const inter = Inter({
   subsets: ['latin'],
   weight: ['300', '400'],
@@ -52,7 +54,7 @@ export default function RootLayout({children}: Readonly<{children: React.ReactNo
         </noscript>
       </head>
       <body>
-        {children}
+        <QueryProvider>{children}</QueryProvider>
         <script dangerouslySetInnerHTML={{__html: revealFontsScript}} />
       </body>
     </html>
