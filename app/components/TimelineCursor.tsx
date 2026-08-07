@@ -10,7 +10,6 @@ import {
   type RefObject,
 } from 'react';
 
-import Mark from './Mark';
 import styles from './TimelineCursor.module.css';
 
 type TimelineCursorOptions = {
@@ -39,7 +38,7 @@ function useTimelineCursor<E extends HTMLElement>({
   const frameRef = useRef<number | null>(null);
   const [active, setActive] = useState(false);
 
-  const updatePosition = useCallback((clientX: number, clientY: number) => {
+  const updatePosition = useCallback((clientX: number) => {
     if (frameRef.current !== null) {
       window.cancelAnimationFrame(frameRef.current);
     }
@@ -56,7 +55,6 @@ function useTimelineCursor<E extends HTMLElement>({
 
       container.style.setProperty('--timeline-cursor-x', `${offset}px`);
       container.style.setProperty('--timeline-cursor-viewport-x', `${clientX}px`);
-      container.style.setProperty('--timeline-cursor-viewport-y', `${clientY}px`);
     });
   }, []);
 
@@ -66,7 +64,7 @@ function useTimelineCursor<E extends HTMLElement>({
         return;
       }
 
-      updatePosition(event.clientX, event.clientY);
+      updatePosition(event.clientX);
       setActive(true);
     },
     [enabled, updatePosition],
@@ -78,7 +76,7 @@ function useTimelineCursor<E extends HTMLElement>({
         return;
       }
 
-      updatePosition(event.clientX, event.clientY);
+      updatePosition(event.clientX);
     },
     [enabled, updatePosition],
   );
@@ -138,13 +136,6 @@ function TimelineCursor({
     >
       <div className={styles.pageLine} />
       <div className={styles.containerLine} />
-      <Mark
-        className={styles.pointer}
-        size={12}
-        fill="var(--timeline-cursor-solid-color)"
-        stroke="var(--color-canvas)"
-        strokeWidth={1}
-      />
     </div>
   );
 }
