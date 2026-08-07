@@ -1,7 +1,6 @@
 .collection {
-  position: relative;
-  inset: 0 -16px;
-  padding: 0 16px;
+  margin-inline: -16px;
+  padding-inline: 16px;
   background: var(--color-surface-raised);
 }
 
@@ -91,7 +90,6 @@
 
 @media (max-width: 620px) {
   .collection {
-    inset: auto;
     inline-size: 100vw;
     margin-inline: calc(50% - 50vw);
     padding-inline: var(--content-gutter);
