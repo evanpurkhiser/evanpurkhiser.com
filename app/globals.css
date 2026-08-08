@@ -63,7 +63,7 @@ main {
   position: absolute;
   inset-block-start: 50%;
   inset-inline-end: calc(100% + 12px);
-  color: var(--color-orange);
+  color: #000;
   translate: 0 -50%;
 }
 
