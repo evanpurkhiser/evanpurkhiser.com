@@ -213,7 +213,7 @@ export default function ActivityTimeline() {
   const palette = palettes.monochrome;
   const terminalActivity = useActivity(['activity', 'atuin'], loadAtuinActivity);
   const github = useActivity(['activity', 'github'], loadGitHubActivity);
-  const cursor = useTimelineCursor<HTMLDivElement>();
+  const cursor = useTimelineCursor<HTMLDivElement>({focusWidth: REVEAL_WIDTH});
   const hasGitHubActivity = github.activity.length > 0;
 
   return (

@@ -13,6 +13,11 @@
   inset-inline-start: clamp(1.5ch, var(--month-mark-position), calc(100% - 1.5ch));
   translate: -50% 0;
   user-select: none;
+  transition: color 100ms ease-out;
+}
+
+:global([data-timeline-cursor-active]) .mark[data-timeline-cursor-focused] {
+  color: var(--color-text);
 }
 
 .loading {
@@ -22,5 +27,11 @@
 @media (max-width: 620px) {
   .mark:nth-child(even) {
     display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mark {
+    transition: none;
   }
 }

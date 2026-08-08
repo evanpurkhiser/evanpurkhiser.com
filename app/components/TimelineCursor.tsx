@@ -16,6 +16,7 @@ import styles from './TimelineCursor.module.css';
 
 type TimelineCursorOptions = {
   enabled?: boolean;
+  focusWidth?: number;
 };
 
 type TimelineCursorProps = {
@@ -36,6 +37,7 @@ type CursorContainerProps<E extends HTMLElement> = {
 
 function useTimelineCursor<E extends HTMLElement>({
   enabled = true,
+  focusWidth = 0,
 }: TimelineCursorOptions = {}) {
   const containerRef = useRef<E>(null);
   const frameRef = useRef<number | null>(null);
@@ -74,9 +76,19 @@ function useTimelineCursor<E extends HTMLElement>({
               `${clientX - trackBounds.left}px`,
             );
           });
+
+        container
+          .querySelectorAll<HTMLElement>('[data-timeline-cursor-focus-target]')
+          .forEach(target => {
+            const targetBounds = target.getBoundingClientRect();
+            const targetCenter = targetBounds.left + targetBounds.width / 2;
+            const focused = Math.abs(clientX - targetCenter) <= focusWidth / 2;
+
+            target.toggleAttribute('data-timeline-cursor-focused', focused);
+          });
       });
     },
-    [width, x],
+    [focusWidth, width, x],
   );
 
   const handlePointerEnter = useCallback(

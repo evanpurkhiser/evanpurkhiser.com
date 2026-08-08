@@ -44,6 +44,7 @@ export default function MonthMarks({
       {monthStarts.map(monthStart => (
         <span
           className={styles.mark}
+          data-timeline-cursor-focus-target
           style={
             {
               '--month-mark-position': `${
