@@ -6,7 +6,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 const nextConfig: NextConfig = {
-  allowedDevOrigins: ['100.124.157.144'],
+  allowedDevOrigins: ['*.prk.network'],
   experimental: {
     useTypeScriptCli: true,
   },
