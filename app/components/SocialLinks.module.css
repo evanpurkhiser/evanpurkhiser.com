@@ -4,6 +4,28 @@
   gap: 6px;
 }
 
+.label {
+  display: grid;
+  overflow: hidden;
+  margin-block: -3px;
+  padding-block: 3px;
+  color: var(--color-text-muted);
+  font-family: var(--font-inter), sans-serif;
+  font-size: 13px;
+  line-height: 1;
+  text-align: end;
+  user-select: none;
+}
+
+.label > span {
+  grid-area: 1 / 1;
+}
+
+.labelItem {
+  align-self: center;
+  justify-self: end;
+}
+
 .link {
   position: relative;
   display: flex;
@@ -38,6 +60,17 @@
 
   .link {
     padding: 5px 4px;
+  }
+
+  .label {
+    position: absolute;
+    overflow: hidden;
+    inline-size: 1px;
+    block-size: 1px;
+    margin: -1px;
+    padding: 0;
+    clip-path: inset(50%);
+    white-space: nowrap;
   }
 
   .icon {
