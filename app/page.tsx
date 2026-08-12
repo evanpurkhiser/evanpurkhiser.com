@@ -1,5 +1,6 @@
 import ActivityTimeline from './components/ActivityTimeline';
 import Mark from './components/Mark';
+import Snapshot from './components/snapshot/Snapshot';
 import SocialLinks from './components/SocialLinks';
 
 export default function Home() {
@@ -17,6 +18,7 @@ export default function Home() {
         </p>
       </header>
 
+      <Snapshot />
       <ActivityTimeline />
     </main>
   );
