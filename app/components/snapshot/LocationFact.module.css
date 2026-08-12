@@ -1,0 +1,19 @@
+.weatherIcon {
+  display: inline-grid;
+  inline-size: var(--snapshot-fact-size);
+  block-size: var(--snapshot-fact-size);
+  place-items: center;
+  font-size: 15px;
+  line-height: 1;
+}
+
+.location {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.localTime,
+.temperature {
+  color: var(--color-text-muted);
+}
