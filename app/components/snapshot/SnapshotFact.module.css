@@ -1,0 +1,40 @@
+.fact {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: subgrid;
+}
+
+.label {
+  display: flex;
+  block-size: var(--snapshot-fact-size);
+  align-self: start;
+  align-items: center;
+  justify-content: flex-end;
+  color: var(--color-text-muted);
+  font-family: var(--font-dm-mono), monospace;
+  font-size: 10px;
+  text-align: end;
+  text-transform: uppercase;
+}
+
+.value {
+  display: grid;
+  grid-column: 2 / -1;
+  grid-template-columns: subgrid;
+  min-inline-size: 0;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.icon {
+  display: grid;
+  grid-column: 1;
+  inline-size: var(--snapshot-fact-size);
+  block-size: var(--snapshot-fact-size);
+  place-items: center;
+}
+
+.content {
+  grid-column: 2;
+  min-inline-size: 0;
+}
