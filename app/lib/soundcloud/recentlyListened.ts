@@ -17,7 +17,10 @@ class SoundCloudApiError extends Error {}
 
 export class SoundCloudAuthenticationError extends Error {}
 
-const optionalString = z.string().min(1).nullish();
+const optionalString = z
+  .string()
+  .nullish()
+  .transform(value => value || null);
 const historyResponseSchema = z.object({
   collection: z.array(
     z.object({
