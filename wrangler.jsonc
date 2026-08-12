@@ -8,6 +8,11 @@
     "directory": ".open-next/assets",
     "binding": "ASSETS",
   },
+  "kv_namespaces": [
+    {
+      "binding": "SOUNDCLOUD_TITLE_CACHE",
+    },
+  ],
   "observability": {
     "enabled": true,
   },
