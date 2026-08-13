@@ -1,13 +1,11 @@
 import {getCloudflareContext} from '@opennextjs/cloudflare';
 
 import {cachedJsonResponse} from '../../lib/serverCache';
-import {createCloudflareTrackMetadataCache} from '../../lib/soundcloud/cloudflareTrackMetadataCache';
+import {SoundCloudAuthenticationError} from '../../lib/soundcloud/recentlyListened';
 import {
-  getSoundCloudRecentlyListened,
-  SoundCloudAuthenticationError,
-} from '../../lib/soundcloud/recentlyListened';
-
-class MissingSoundCloudTokenError extends Error {}
+  loadRecentlyListenedSnapshot,
+  MissingSoundCloudTokenError,
+} from '../../lib/soundcloud/recentlyListenedService';
 
 export async function GET(request: Request) {
   try {
@@ -15,17 +13,8 @@ export async function GET(request: Request) {
       request,
       async () => {
         const {env} = await getCloudflareContext({async: true});
-        const token = env.SC_WEB_ACCESS_TOKEN.trim();
 
-        if (!token) {
-          throw new MissingSoundCloudTokenError();
-        }
-
-        return getSoundCloudRecentlyListened({
-          accessToken: token,
-          metadataCache: createCloudflareTrackMetadataCache(env.SOUNDCLOUD_TITLE_CACHE),
-          openAiApiKey: env.OPENAI_API_KEY,
-        });
+        return loadRecentlyListenedSnapshot(env);
       },
       {freshTtlSeconds: 60, staleTtlSeconds: 24 * 60 * 60},
     );
