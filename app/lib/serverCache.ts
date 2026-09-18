@@ -196,7 +196,8 @@ export async function cachedJsonResponse<T>(
   const existingRequest = pendingResponses.get(cacheKey.url);
 
   if (existingRequest) {
-    return responseForClient((await existingRequest).clone(), 'HIT', policy);
+    const response = await existingRequest;
+    return responseForClient(response.clone(), 'HIT', policy);
   }
 
   const response = await loadAndStoreResponse(cloudflareCache, cacheKey, load, policy);
