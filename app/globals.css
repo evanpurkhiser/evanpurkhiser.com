@@ -4,12 +4,15 @@
 }
 
 :root {
+  color-scheme: light;
+
   --color-blue: #0c3eff;
   --color-orange: #ff6800;
   --color-canvas: #fff;
   --color-surface: #f7f7f8;
   --color-surface-raised: #fbfbfc;
   --color-border: #dedfe3;
+  --color-mark: #000;
   --color-text: #27292e;
   --color-text-soft: #555961;
   --color-text-muted: #858a94;
@@ -19,12 +22,41 @@
   color: var(--color-text);
 }
 
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  --color-canvas: #000;
+  --color-surface: #111214;
+  --color-surface-raised: #090a0c;
+  --color-border: #35373d;
+  --color-mark: #fff;
+  --color-text: #f1f1f3;
+  --color-text-soft: #c2c4ca;
+  --color-text-muted: #8f939d;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    color-scheme: dark;
+
+    --color-canvas: #000;
+    --color-surface: #111214;
+    --color-surface-raised: #090a0c;
+    --color-border: #35373d;
+    --color-mark: #fff;
+    --color-text: #f1f1f3;
+    --color-text-soft: #c2c4ca;
+    --color-text-muted: #8f939d;
+  }
+}
+
 body {
   display: grid;
   grid-template-rows: min(20dvh, 200px) max-content 1fr;
   min-block-size: 100dvb;
   justify-items: center;
   padding-block-end: min(20dvh, 200px);
+  background: var(--color-canvas);
 }
 
 .fonts-loading body {
@@ -63,7 +95,7 @@ main {
   position: absolute;
   inset-block-start: 50%;
   inset-inline-end: calc(100% + 12px);
-  color: #000;
+  color: var(--color-mark);
   translate: 0 -50%;
 }
 

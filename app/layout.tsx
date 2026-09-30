@@ -5,6 +5,7 @@ import {DM_Mono, Inter} from 'next/font/google';
 import localFont from 'next/font/local';
 
 import QueryProvider from './components/QueryProvider';
+import ThemeProvider from './components/ThemeProvider';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -54,7 +55,9 @@ export default function RootLayout({children}: Readonly<{children: React.ReactNo
         </noscript>
       </head>
       <body>
-        <QueryProvider>{children}</QueryProvider>
+        <ThemeProvider>
+          <QueryProvider>{children}</QueryProvider>
+        </ThemeProvider>
         <script dangerouslySetInnerHTML={{__html: revealFontsScript}} />
       </body>
     </html>
