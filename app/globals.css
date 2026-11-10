@@ -59,10 +59,6 @@ body {
   background: var(--color-canvas);
 }
 
-.fonts-loading body {
-  visibility: hidden;
-}
-
 ::selection {
   background: var(--color-orange);
   color: #fff;

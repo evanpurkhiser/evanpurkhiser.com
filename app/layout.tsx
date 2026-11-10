@@ -31,12 +31,6 @@ const syncopate = localFont({
   ],
 });
 
-const revealFontsScript = `
-  document.fonts.ready.then(() => {
-    document.documentElement.classList.remove('fonts-loading');
-  });
-`;
-
 export const metadata: Metadata = {
   title: 'Evan Purkhiser',
   description: 'Evan Purkhiser is a software engineer in New York City.',
@@ -46,19 +40,13 @@ export default function RootLayout({children}: Readonly<{children: React.ReactNo
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${dmMono.variable} ${syncopate.variable} fonts-loading`}
+      className={`${inter.variable} ${dmMono.variable} ${syncopate.variable}`}
       suppressHydrationWarning
     >
-      <head>
-        <noscript>
-          <style>{'.fonts-loading body { visibility: visible; }'}</style>
-        </noscript>
-      </head>
       <body>
         <ThemeProvider>
           <QueryProvider>{children}</QueryProvider>
         </ThemeProvider>
-        <script dangerouslySetInnerHTML={{__html: revealFontsScript}} />
       </body>
     </html>
   );
