@@ -12,7 +12,7 @@ function timeUntilNextMinute(now: number) {
   return MINUTE_MILLISECONDS - (now % MINUTE_MILLISECONDS);
 }
 
-export default function useCurrentTime(initialTime: number) {
+export default function useCurrentTime(initialTime = Date.now()) {
   const [now, setNow] = useState(initialTime);
 
   useEffect(() => {

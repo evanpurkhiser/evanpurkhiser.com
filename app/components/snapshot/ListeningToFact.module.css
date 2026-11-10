@@ -36,7 +36,8 @@
 }
 
 .artwork,
-.artworkFallback {
+.artworkFallback,
+.artworkLoading {
   display: block;
   inline-size: var(--snapshot-fact-size);
   block-size: var(--snapshot-fact-size);
@@ -52,6 +53,10 @@
   background:
     radial-gradient(circle at 32% 30%, rgb(255 255 255 / 35%), transparent 24%),
     linear-gradient(140deg, var(--color-orange), #ff9d5c);
+}
+
+.artworkLoading {
+  background: var(--color-surface);
 }
 
 .artist,
