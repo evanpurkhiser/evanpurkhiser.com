@@ -11,7 +11,7 @@ import styles from './ListeningToFact.module.css';
 import ListeningToFactInteraction, {
   HISTORY_EXIT_STAGGER_SECONDS,
 } from './ListeningToFactInteraction';
-import {SnapshotFactIcon} from './SnapshotFact';
+import SnapshotFact, {SnapshotFactContent, SnapshotFactIcon} from './SnapshotFact';
 import TrackMetadata from './TrackMetadata';
 
 const relativeTime = new Intl.RelativeTimeFormat('en', {
@@ -118,13 +118,26 @@ function TrackRow({
   );
 }
 
-export default function ListeningToFactContent({initialTime}: {initialTime: number}) {
-  const {data: tracks = []} = useQuery(recentlyListenedQueryOptions);
-  const now = useCurrentTime(initialTime);
+function ListeningToFactPlaceholder({failed}: {failed: boolean}) {
+  return (
+    <SnapshotFact label="chilling to" valueClassName={styles.value}>
+      <SnapshotFactIcon>
+        <span className={styles.artworkLoading} aria-hidden="true" />
+      </SnapshotFactIcon>
+      <SnapshotFactContent className={styles.metadata} role="status">
+        <span className={styles.artist}>{failed ? 'unavailable' : 'loading…'}</span>
+      </SnapshotFactContent>
+    </SnapshotFact>
+  );
+}
+
+export default function ListeningToFactContent() {
+  const {data: tracks = [], isError} = useQuery(recentlyListenedQueryOptions);
+  const now = useCurrentTime();
   const [track, ...history] = tracks;
 
   if (!track) {
-    return null;
+    return <ListeningToFactPlaceholder failed={isError} />;
   }
 
   return (
