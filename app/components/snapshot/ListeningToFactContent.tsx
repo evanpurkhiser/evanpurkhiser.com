@@ -1,6 +1,5 @@
 'use client';
 
-import {Temporal} from '@js-temporal/polyfill';
 import {useQuery} from '@tanstack/react-query';
 import {motion, type Variants} from 'framer-motion';
 
@@ -19,6 +18,11 @@ const relativeTime = new Intl.RelativeTimeFormat('en', {
   numeric: 'always',
   style: 'long',
 });
+const newYorkDateTime = new Intl.DateTimeFormat('en', {
+  dateStyle: 'full',
+  timeStyle: 'long',
+  timeZone: 'America/New_York',
+});
 const primaryTimestampVariants: Variants = {
   entering: {opacity: 0},
   exiting: exitDelay => ({
@@ -29,12 +33,7 @@ const primaryTimestampVariants: Variants = {
 };
 
 function formatRelativeTime(playedAt: number, now: number) {
-  const playedAtInstant = Temporal.Instant.fromEpochMilliseconds(playedAt);
-  const nowInstant = Temporal.Instant.fromEpochMilliseconds(now);
-  const elapsedSeconds = Math.max(
-    0,
-    Math.floor(playedAtInstant.until(nowInstant).total('second')),
-  );
+  const elapsedSeconds = Math.max(0, Math.floor((now - playedAt) / 1000));
 
   if (elapsedSeconds < 60) {
     return relativeTime.format(-elapsedSeconds, 'second');
@@ -56,9 +55,7 @@ function formatRelativeTime(playedAt: number, now: number) {
 }
 
 function formatPlayedAt(playedAt: number) {
-  return Temporal.Instant.fromEpochMilliseconds(playedAt)
-    .toZonedDateTimeISO('America/New_York')
-    .toLocaleString('en', {dateStyle: 'full', timeStyle: 'long'});
+  return newYorkDateTime.format(playedAt);
 }
 
 function TrackArtwork({track}: {track: RecentlyListenedTrack}) {
@@ -88,7 +85,7 @@ function TrackRow({
   now: number;
   track: RecentlyListenedTrack;
 }) {
-  const playedAt = Temporal.Instant.fromEpochMilliseconds(track.played_at);
+  const playedAt = new Date(track.played_at).toISOString();
 
   return (
     <div className={styles.trackRow}>
@@ -102,7 +99,7 @@ function TrackRow({
         <motion.time
           className={styles.listenedAt}
           custom={timestampExitDelay}
-          dateTime={playedAt.toString()}
+          dateTime={playedAt}
           title={formatPlayedAt(track.played_at)}
           variants={primaryTimestampVariants}
         >
@@ -111,7 +108,7 @@ function TrackRow({
       ) : (
         <time
           className={styles.listenedAt}
-          dateTime={playedAt.toString()}
+          dateTime={playedAt}
           title={formatPlayedAt(track.played_at)}
         >
           {formatRelativeTime(track.played_at, now)}

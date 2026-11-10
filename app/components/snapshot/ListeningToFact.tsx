@@ -1,4 +1,3 @@
-import {Temporal} from '@js-temporal/polyfill';
 import {dehydrate, HydrationBoundary} from '@tanstack/react-query';
 import {unstable_rethrow} from 'next/navigation';
 import {connection} from 'next/server';
@@ -13,7 +12,7 @@ export default async function ListeningToFact() {
   await connection();
 
   const queryClient = getQueryClient();
-  const now = Temporal.Now.instant().epochMilliseconds;
+  const now = Date.now();
 
   try {
     await queryClient.fetchQuery({
