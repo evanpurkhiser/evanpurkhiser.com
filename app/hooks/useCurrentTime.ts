@@ -2,12 +2,10 @@
 
 import {useEffect, useState} from 'react';
 
-import {Temporal} from '@js-temporal/polyfill';
-
 const MINUTE_MILLISECONDS = 60_000;
 
 function currentTime() {
-  return Temporal.Now.instant().epochMilliseconds;
+  return Date.now();
 }
 
 function timeUntilNextMinute(now: number) {
