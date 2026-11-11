@@ -2,12 +2,13 @@
 
 ## Direction
 
-The site should feel minimal at first glance, then reveal a surprising amount of
-detail to people who choose to explore. It should be personal, playful, and data
-rich without looking like a dashboard.
+The site should feel minimal at first glance,
+then reveal a surprising amount of detail to people who choose to explore.
+It should be personal, playful, and data rich without looking like a dashboard.
 
-Keep the main page calm and concise. Let deeper information appear through small
-visualizations, expandable details, project pages, and writing.
+Keep the main page calm and concise.
+Let deeper information appear through small visualizations, expandable details,
+project pages, and writing.
 
 ## Main page
 
@@ -67,13 +68,13 @@ Small visualizations could act as entry points into more detailed views.
 - Travel or places
 - Reading and writing activity
 
-Statistics should tell a story or expose an interesting pattern. Avoid numbers
-that exist only because they are easy to collect.
+Statistics should tell a story or expose an interesting pattern.
+Avoid numbers that exist only because they are easy to collect.
 
 ## Personal statistics service
 
-Build a small service on the home server that collects, normalizes, and publishes
-interesting personal statistics for the website.
+Build a small service on the home server that collects, normalizes,
+and publishes interesting personal statistics for the website.
 
 Possible data sources:
 
@@ -84,9 +85,10 @@ Possible data sources:
 - Git repositories and deployment systems
 - The home server's service inventory
 
-The public API should expose intentionally selected aggregates, never raw personal
-events. It should make privacy boundaries explicit and avoid leaking repository
-names, commands, locations, or infrastructure details by accident.
+The public API should expose intentionally selected aggregates,
+never raw personal events.
+It should make privacy boundaries explicit and avoid leaking repository names,
+commands, locations, or infrastructure details by accident.
 
 Useful properties:
 
@@ -98,7 +100,8 @@ Useful properties:
 
 ## Interaction ideas
 
-- Graphs begin as quiet decorative elements but reveal exact values on interaction
+- Graphs begin as quiet decorative elements
+  but reveal exact values on interaction
 - Clicking a statistic opens a deeper view with context
 - Small annotations explain unusual peaks or meaningful periods
 - Details remain accessible without requiring animation
@@ -109,8 +112,8 @@ Useful properties:
 - Which statistics feel meaningfully personal rather than performative?
 - Should detailed views live on the main page or have their own routes?
 - How often should data refresh?
-- Should commit counts follow GitHub contribution rules or count every authored
-  commit reachable in an organization?
+- Should commit counts follow GitHub contribution rules
+  or count every authored commit reachable in an organization?
 - Which information is safe to expose publicly?
 - How should private activity contribute to public aggregates?
 
