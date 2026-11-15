@@ -8,7 +8,7 @@ type AgentActivity = {
   prompts: number;
 };
 
-async function fetchAtuinActivity() {
+async function fetchAgentActivity() {
   const response = await fetch(ATUIN_API_URL, {
     headers: {Prefer: 'timezone=America/New_York'},
   });
@@ -24,7 +24,7 @@ async function fetchAtuinActivity() {
 
 export async function GET(request: Request) {
   try {
-    return await cachedJsonResponse(request, fetchAtuinActivity);
+    return await cachedJsonResponse(request, fetchAgentActivity);
   } catch (error) {
     console.error('Failed to load agent prompt activity', error);
 

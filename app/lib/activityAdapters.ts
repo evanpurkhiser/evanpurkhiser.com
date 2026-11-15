@@ -16,7 +16,7 @@ async function fetchDailyActivity(source: string, path: string, signal: AbortSig
 }
 
 export function loadAgentActivity({signal}: {signal: AbortSignal}) {
-  return fetchDailyActivity('Atuin Abacus', 'atuin-activity', signal);
+  return fetchDailyActivity('Atuin Abacus', 'agent-activity', signal);
 }
 
 export function loadGitHubActivity({signal}: {signal: AbortSignal}) {

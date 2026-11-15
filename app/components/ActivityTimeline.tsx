@@ -40,6 +40,8 @@ type ActivityGraphProps = {
   id: string;
   label: string;
   source: ActivitySource;
+  start: DateValue;
+  end: DateValue;
   indicatorColor?: string;
   color?: string;
   darkColor?: string;
@@ -126,6 +128,8 @@ function ActivityGraph({
   id,
   label,
   source,
+  start,
+  end,
   indicatorColor,
   color,
   darkColor,
@@ -134,7 +138,7 @@ function ActivityGraph({
   revealDarkColor,
   showRevealMonthTicks,
 }: ActivityGraphProps) {
-  const {activity, failed, loading, rasterData, start, end} = source;
+  const {activity, failed, loading, rasterData} = source;
   const total = activity.reduce((sum, bucket) => sum + bucket.count, 0);
   const summary = failed
     ? 'unavailable'
@@ -227,6 +231,8 @@ export default function ActivityTimeline() {
             id="agent-prompts-title"
             label="Agent Prompts"
             source={agentPrompts}
+            start={github.start}
+            end={github.end}
             indicatorColor={palettes.agentPrompts.color}
             color={palette.color}
             darkColor={palette.darkColor}
@@ -241,6 +247,8 @@ export default function ActivityTimeline() {
             id="github-title"
             label="GitHub"
             source={github}
+            start={github.start}
+            end={github.end}
             indicatorColor={palettes.github.color}
             color={palette.color}
             darkColor={palette.darkColor}
