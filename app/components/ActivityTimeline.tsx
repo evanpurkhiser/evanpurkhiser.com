@@ -12,7 +12,7 @@ import {
 
 import {
   dailyActivityToTimeRaster,
-  loadAtuinActivity,
+  loadAgentActivity,
   loadGitHubActivity,
 } from '../lib/activityAdapters';
 import type {DailyActivity} from '../lib/dailyActivity';
@@ -28,7 +28,7 @@ const INTENSITY_EXPONENT = 2;
 const REVEAL_WIDTH = 100;
 
 const palettes = {
-  terminalActivity: {darkColor: '#ffa96e', color: '#ff6800'},
+  agentPrompts: {darkColor: '#ffa96e', color: '#ff6800'},
   github: {darkColor: '#72ed88', color: '#00d638'},
   monochrome: {darkColor: '#a0a0a0', color: '#000000'},
 } as const;
@@ -211,7 +211,7 @@ function ActivityGraph({
 
 export default function ActivityTimeline() {
   const palette = palettes.monochrome;
-  const terminalActivity = useActivity(['activity', 'atuin'], loadAtuinActivity);
+  const agentPrompts = useActivity(['activity', 'agents'], loadAgentActivity);
   const github = useActivity(['activity', 'github'], loadGitHubActivity);
   const cursor = useTimelineCursor<HTMLDivElement>({focusWidth: REVEAL_WIDTH});
   const hasGitHubActivity = github.activity.length > 0;
@@ -224,15 +224,15 @@ export default function ActivityTimeline() {
             active={cursor.active}
             cursorWidth={cursor.width}
             cursorX={cursor.x}
-            id="terminal-activity-title"
-            label="Terminal"
-            source={terminalActivity}
-            indicatorColor={palettes.terminalActivity.color}
+            id="agent-prompts-title"
+            label="Agent Prompts"
+            source={agentPrompts}
+            indicatorColor={palettes.agentPrompts.color}
             color={palette.color}
             darkColor={palette.darkColor}
             intensityExponent={INTENSITY_EXPONENT}
-            revealColor={palettes.terminalActivity.color}
-            revealDarkColor={palettes.terminalActivity.darkColor}
+            revealColor={palettes.agentPrompts.color}
+            revealDarkColor={palettes.agentPrompts.darkColor}
           />
           <ActivityGraph
             active={cursor.active}
