@@ -1,4 +1,3 @@
-import {Temporal} from '@js-temporal/polyfill';
 import {z} from 'zod';
 
 import styles from './LocationFact.module.css';
@@ -66,7 +65,7 @@ async function loadNewYorkWeather() {
 
 export default async function LocationFact() {
   const weather = await loadNewYorkWeather();
-  const now = Temporal.Now.instant().epochMilliseconds;
+  const now = Date.now();
 
   return (
     <SnapshotFact label="resident of">

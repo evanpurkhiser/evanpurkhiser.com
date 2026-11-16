@@ -1,7 +1,5 @@
 'use client';
 
-import {Temporal} from '@js-temporal/polyfill';
-
 import useCurrentTime from '../../hooks/useCurrentTime';
 
 import styles from './LocationFact.module.css';
@@ -15,11 +13,9 @@ const newYorkTime = new Intl.DateTimeFormat('en', {
 
 export default function LocationTime({initialTime}: {initialTime: number}) {
   const now = useCurrentTime(initialTime);
-  const zonedTime =
-    Temporal.Instant.fromEpochMilliseconds(now).toZonedDateTimeISO('America/New_York');
 
   return (
-    <time className={styles.localTime} dateTime={zonedTime.toString()}>
+    <time className={styles.localTime} dateTime={new Date(now).toISOString()}>
       {newYorkTime.format(now)},
     </time>
   );
